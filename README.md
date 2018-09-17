@@ -1,6 +1,6 @@
 # SpotPer
 
-SpotPer é uma versão personalizada do aplicativo mundialmente conhecido **Spotfy**.
+SpotPer é uma versão personalizada do aplicativo mundialmente conhecido **Spotify**.
 
 De fácil usabilidade, esse novo aplicativo está chamando a atenção das pessoas que procuram por um reprodutor completo, gratuito e muito intuitivo.
 
