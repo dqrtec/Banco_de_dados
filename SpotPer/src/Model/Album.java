@@ -1,4 +1,4 @@
-package view;
+package Model;
 
 /**
  *
@@ -69,7 +69,4 @@ public class Album {
     public void setDataCompra(String dataCompra) {
         this.dataCompra = dataCompra;
     }
-   
-   
-   
 }
