@@ -5,8 +5,9 @@ package Model;
  * @author Tibet Teixeira
  */
 public class Gravadora {
-    
+  
     int codigoGravadora;
+    String nome;
     String homePage;
     String rua;
     String cidade;
@@ -18,6 +19,14 @@ public class Gravadora {
 
     public void setCodigoGravadora(int codigoGravadora) {
         this.codigoGravadora = codigoGravadora;
+    }
+    
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public String getHomePage() {
