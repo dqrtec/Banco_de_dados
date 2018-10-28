@@ -6,5 +6,7 @@ De fácil usabilidade, esse novo aplicativo está chamando a atenção das pesso
 
 ![alt text](https://raw.githubusercontent.com/dqrtec/FBD/master/Diagramas/DR.jpg "Diagrama Relacional")
 
+executar o .jar
+java -jar architect.jar
 
 _Aplicação da disciplina **Fundamentos de Bancos de Dados**_
