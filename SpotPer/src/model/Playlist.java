@@ -6,11 +6,9 @@ package Model;
  */
 public class Playlist {
     int idPlaylist;
-    int quantidadeTocada;
     float tempoTotalExecucao;
     String nome;
     String dataCriacao;
-    String dataUltimaVezTocada;
 
     public int getIdPlaylist() {
         return idPlaylist;
@@ -18,14 +16,6 @@ public class Playlist {
 
     public void setIdPlaylist(int idPlaylist) {
         this.idPlaylist = idPlaylist;
-    }
-
-    public int getQuantidadeTocada() {
-        return quantidadeTocada;
-    }
-
-    public void setQuantidadeTocada(int quantidadeTocada) {
-        this.quantidadeTocada = quantidadeTocada;
     }
 
     public float getTempoTotalExecucao() {
@@ -51,14 +41,4 @@ public class Playlist {
     public void setDataCriacao(String dataCriacao) {
         this.dataCriacao = dataCriacao;
     }
-
-    public String getDataUltimaVezTocada() {
-        return dataUltimaVezTocada;
-    }
-
-    public void setDataUltimaVezTocada(String dataUltimaVezTocada) {
-        this.dataUltimaVezTocada = dataUltimaVezTocada;
-    }
-    
-    
 }
