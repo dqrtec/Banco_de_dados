@@ -7,6 +7,7 @@ package controller;
 
 import Model.Album;
 import Model.Faixa;
+import Model.FaixaPlaylist;
 import Model.Playlist;
 import java.util.List;
 
@@ -26,7 +27,7 @@ public class PlaylistSQL extends ExecuteSQL {
     }
 
     public String criarPlaylist(Playlist p) {
-        String sql = "INSERT INTO playlist VALUES (? ? ? ? ? ?)";
+        String sql = "INSERT INTO playlist VALUES (? ? ? ?)";
 
         try {
             PreparedStatement ps = getConn().prepareStatement(sql);
@@ -34,9 +35,7 @@ public class PlaylistSQL extends ExecuteSQL {
             ps.setInt(1, p.getIdPlaylist());
             ps.setString(2, p.getNome());
             ps.setString(3, p.getDataCriacao());
-            ps.setInt(4, p.getQuantidadeTocada());
-            ps.setFloat(5, p.getTempoTotalExecucao());
-            ps.setString(6, p.getDataUltimaVezTocada());
+            ps.setFloat(4, p.getTempoTotalExecucao());
 
             if (ps.executeUpdate() > 0) {
                 return "Playlist criada com sucesso!";
@@ -50,7 +49,7 @@ public class PlaylistSQL extends ExecuteSQL {
     }
 
     public String adicionaFaixaPlaylist(Playlist p, Faixa f) {
-        String sql = "INSERT INTO playlist_faixa VALUES (? ? ?)";
+        String sql = "INSERT INTO playlist_faixa VALUES (? ? ? ? ?)";
 
         try {
             PreparedStatement ps = getConn().prepareStatement(sql);
@@ -58,8 +57,11 @@ public class PlaylistSQL extends ExecuteSQL {
             ps.setInt(1, p.getIdPlaylist());
             ps.setInt(2, f.getIdAlbum());
             ps.setInt(3, f.getNumFaixa());
+            ps.setInt(4, 0); // Quantidade tocada
+            ps.setString(5, null); // Data última vez reproduzida
 
             if (ps.executeUpdate() > 0) {
+                alteraPlaylist(p, p.getTempoTotalExecucao() + f.getTempoDuracao());
                 return "Faixa adicionada com sucesso!";
             } else {
                 return "Erro ao adicionar Faixa";
@@ -69,7 +71,7 @@ public class PlaylistSQL extends ExecuteSQL {
             return e.getMessage();
         }
     }
-    
+
     public String adicionaAlbumPlaylist(Playlist p, Album a) {
         // Fazer um while que percorre todas as musicas do album 
         // adicionando na playlist
@@ -94,7 +96,7 @@ public class PlaylistSQL extends ExecuteSQL {
     }
 
     public List<Playlist> listarPlaylist(String nome) {
-        String sql = "SELECT id_playlist, nome, data_criacao, data_ultima_vez_tocada, quantidade_tocada, tempo_total_execucao "
+        String sql = "SELECT id_playlist, nome, data_criacao, tempo_total_execucao "
                 + "FROM playlist WHERE nome LIKE '%" + nome + "%'";
         List<Playlist> listaPlaylist = new ArrayList();
         try {
@@ -108,9 +110,7 @@ public class PlaylistSQL extends ExecuteSQL {
                     p.setIdPlaylist(rs.getInt(1));
                     p.setNome(rs.getString(2));
                     p.setDataCriacao(rs.getString(3));
-                    p.setDataUltimaVezTocada(rs.getString(4));
-                    p.setQuantidadeTocada(rs.getInt(5));
-                    p.setTempoTotalExecucao(rs.getFloat(6));
+                    p.setTempoTotalExecucao(rs.getFloat(4));
 
                     listaPlaylist.add(p);
                 }
@@ -125,7 +125,11 @@ public class PlaylistSQL extends ExecuteSQL {
     }
 
     public List<Faixa> listarFaixaPlaylist(int idPlaylist) {
-        String sql = "SELECT id_album, num_faixa FROM album_faixa_playlist WHERE id_playlist = " + idPlaylist;
+        String sql = "SELECT f.num_faixa, f.id_album, f.descricao, f.tempo_duracao, f.id_composicao, f.tipo_gravacao "
+                + "FROM faixa f "
+                + "INNER JOIN faixa_playlist fp ON (f.num_faixa = fp.num_faixa) "
+                + "WHERE fp.id_playlist = " + idPlaylist;
+
         List<Faixa> listaFaixa = new ArrayList();
         try {
             PreparedStatement ps = getConn().prepareStatement(sql);
@@ -134,8 +138,14 @@ public class PlaylistSQL extends ExecuteSQL {
             if (rs != null) {
                 while (rs.next()) {
                     Faixa f = new Faixa();
-                    f.setIdAlbum(rs.getInt(1));
-                    f.setNumFaixa(rs.getInt(2));
+
+                    f.setNumFaixa(rs.getInt(1));
+                    f.setIdAlbum(rs.getInt(2));
+                    f.setDescricao(rs.getString(3));
+                    f.setTempoDuracao(rs.getFloat(4));
+                    f.setIdComposicao(rs.getInt(5));
+                    f.setTipoGravacao(rs.getString(6));
+
                     listaFaixa.add(f);
                 }
                 return listaFaixa;
@@ -148,17 +158,34 @@ public class PlaylistSQL extends ExecuteSQL {
         }
     }
 
-    public String alteraPlaylist(Playlist p) {
-        String sql = "UPDATE playlist SET nome=?, data_criacao=?,"
-                + "quantidade_tocada=?, tempo_total_execucao=?, data_ultima_vez_tocada=?"
-                + " WHERE id_playlist=?";
+    public String alteraPlaylist(Playlist p, String nome) {
+        String sql = "UPDATE playlist SET nome=? "
+                + "WHERE id_playlist=?";
         try {
             PreparedStatement ps = getConn().prepareStatement(sql);
-            ps.setString(1, p.getNome());
-            ps.setString(2, p.getDataCriacao());
-            ps.setInt(3, p.getQuantidadeTocada());
-            ps.setFloat(4, p.getTempoTotalExecucao());
-            ps.setString(5, p.getDataUltimaVezTocada());
+
+            ps.setString(1, nome);
+            ps.setInt(2, p.getIdPlaylist());
+
+            if (ps.executeUpdate() > 0) {
+                return "Playlist atualizada!";
+
+            } else {
+                return "Erro ao Atualizar";
+            }
+        } catch (SQLException e) {
+            return e.getMessage();
+        }
+    }
+
+    public String alteraPlaylist(Playlist p, Float tempoTotalExecucao) {
+        String sql = "UPDATE playlist SET tempo_total_execucao=? "
+                + "WHERE id_playlist=?";
+        try {
+            PreparedStatement ps = getConn().prepareStatement(sql);
+
+            ps.setFloat(1, tempoTotalExecucao);
+            ps.setFloat(2, p.getIdPlaylist());
 
             if (ps.executeUpdate() > 0) {
                 return "Playlist atualizada!";
@@ -177,30 +204,35 @@ public class PlaylistSQL extends ExecuteSQL {
         try {
             PreparedStatement ps = getConn().prepareStatement(sql);
             ps.setInt(1, p.getIdPlaylist());
+
             if (ps.executeUpdate() > 0) {
                 return "Playlist removida com sucesso!";
             } else {
                 return "Erro ao remover playlist.";
             }
+
         } catch (SQLException e) {
             return e.getMessage();
         }
     }
 
     public String removerFaixaPlaylist(Playlist p, Faixa f) {
-        String sql = "DELETE FROM album_faixa_playlist "
+        String sql = "DELETE FROM faixa_playlist "
                 + "WHERE id_playlist = ? and id_album = ? and num_faixa = ?";
 
         try {
             PreparedStatement ps = getConn().prepareStatement(sql);
+
             ps.setInt(1, p.getIdPlaylist());
             ps.setInt(2, f.getIdAlbum());
             ps.setInt(3, f.getNumFaixa());
+
             if (ps.executeUpdate() > 0) {
                 return "Faixa removida com sucesso!";
             } else {
                 return "Erro ao remover faixa.";
             }
+
         } catch (SQLException e) {
             return e.getMessage();
         }
