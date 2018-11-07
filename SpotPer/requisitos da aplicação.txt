@@ -1,9 +1,0 @@
-Implemente um aplicativo Java, C ou Python, que permita a inserção playlists no
-banco de dados. Este aplicativo deve mostrar todos os álbuns existentes. O
-usuário pode, assim, escolher o(s) álbum(ns) e quais faixas destes devem compor
-a playlist.
-
-
-Implemente um aplicativo Java, C ou Python, com a seguinte funcionalidade: dada
-a descrição de álbum (ou parte dela), tornar possível a atualização de qualquer
-atributo do álbum.
