@@ -1,190 +1,200 @@
 CREATE DATABASE spotper;
 
-CREATE TABLE peri_musi(
-	peri_musi_id SMALLINT NOT NULL,
+------------------| TABELAS |------------------
+
+CREATE TABLE periodo_musical(
+	id_periodo SMALLINT NOT NULL,
 	inicio_periodo DATE NOT NULL,
-	fim_periodo DATE NOT NULL,
-	descricao VARCHAR(50)
+	fim_periodo DATE,
+	descricao VARCHAR(50) NOT NULL
 );
 
 CREATE TABLE compositor(
-	compositor_id SMALLINT NOT NULL,
-	peri_musi_id SMALLINT NOT NULL,
-	datamorte DATE,
-	cidade_compositor VARCHAR(50) NOT NULL,
-	pais_compositor VARCHAR(50) NOT NULL,
-	nome_compositor VARCHAR(50) NOT NULL,
-	data_nascimento DATE NOT NULL
+	id_compositor INT NOT NULL,
+	nome VARCHAR(50) NOT NULL,
+	data_nascimento DATE NOT NULL,
+	data_morte DATE,
+	pais VARCHAR(50) NOT NULL,
+	cidade VARCHAR(50) NOT NULL,
+	id_periodo SMALLINT NOT NULL,
 );
 
-CREATE TABLE compositor_faixa(
-	compositor_id SMALLINT NOT NULL,
+CREATE TABLE faixa_compositor(
+	id_compositor INT NOT NULL,
 	num_faixa SMALLINT NOT NULL,
-	album_id SMALLINT NOT NULL
+	id_album INT NOT NULL
 );
 
 CREATE TABLE tipo_interprete(
-	tipo_interprete_id SMALLINT NOT NULL,
+	id_tipo_interprete SMALLINT NOT NULL,
 	tipo VARCHAR(50) NOT NULL
 );
 
 CREATE TABLE interprete(
-	interprete_id SMALLINT NOT NULL,
-	tipo_interprete_id SMALLINT NOT NULL,
-	nome_interprete VARCHAR(50)
+	id_interprete INT NOT NULL,
+	id_tipo_interprete SMALLINT NOT NULL,
+	nome VARCHAR(50)
 );
 
 CREATE TABLE faixa_interprete(
-	interprete_id SMALLINT NOT NULL,
+	id_interprete INT NOT NULL,
 	num_faixa SMALLINT NOT NULL,
-	album_id SMALLINT NOT NULL
+	id_album INT NOT NULL
 );
 
 CREATE TABLE tipo_composicao(
-	tipo_composicao_id SMALLINT NOT NULL,
-	tipo_compo_descricao VARCHAR(50)
+	id_tipo_composicao SMALLINT NOT NULL,
+	descricao VARCHAR(50) NOT NULL
 );
 
 CREATE TABLE telefone_gravadora(
-	telefone VARCHAR(20) NOT NULL,
-	gravadora_id SMALLINT NOT NULL
+	cod_gravadora INT NOT NULL,
+	telefone VARCHAR(20) NOT NULL
 );
 
 CREATE TABLE gravadora(
-	gravadora_id SMALLINT NOT NULL,
-	nome_gravadora VARCHAR(50) NOT NULL,
+	cod_gravadora INT NOT NULL,
+	nome VARCHAR(50) NOT NULL,
 	home_page VARCHAR(50),
-	rua VARCHAR(50),
-	cidade_gravadora VARCHAR(50) NOT NULL,
-	pais_gravadora VARCHAR(50) NOT NULL
+	pais VARCHAR(50) NOT NULL,
+	cidade VARCHAR(50) NOT NULL,
+	rua VARCHAR(50) NOT NULL
 );
 
 CREATE TABLE album(
-	album_id SMALLINT NOT NULL,
+	id_album INT NOT NULL,
+	descricao VARCHAR(50) NOT NULL,
 	tipo_compra VARCHAR(50) NOT NULL,
 	data_gravacao DATE NOT NULL,
-	album_descricao VARCHAR(50) NOT NULL,
 	data_compra DATE,
 	preco_compra DECIMAL(10,2),
-	gravadora_id SMALLINT NOT NULL
-);
-
-CREATE TABLE album_faixa(
-	num_faixa SMALLINT NOT NULL,
-	album_id SMALLINT NOT NULL
+	cod_gravadora INT NOT NULL
 );
 
 CREATE TABLE faixa(
 	num_faixa SMALLINT NOT NULL,
-	album_id SMALLINT NOT NULL,
-	tempo_duracao_min DECIMAL(10,2),
-	faixa_descricao VARCHAR(50),
-	tipo_composicao_id SMALLINT NOT NULL
+	id_album INT NOT NULL,
+	descricao VARCHAR(50) NOT NULL,
+	tempo_duracao DECIMAL(10,2) NOT NULL,
+	tipo_gravacao VARCHAR (3) NOT NULL,
+	id_tipo_composicao SMALLINT NOT NULL
 );
 
-CREATE TABLE album_faixa_playlist(
-	playlist_id SMALLINT NOT NULL,
+CREATE TABLE faixa_playlist(
+	id_playlist INT NOT NULL,
+	id_album INT NOT NULL,
 	num_faixa SMALLINT NOT NULL,
-	album_id SMALLINT NOT NULL,
-	quantidade_tocada SMALLINT NOT NULL,
+	quantidade_tocada INT,
 	data_ultima_vez_tocada DATE
 );
 
 CREATE TABLE playlist(
-	playlist_id SMALLINT NOT NULL,
+	id_playlist INT NOT NULL,
+	nome VARCHAR(50) NOT NULL,
 	data_criacao DATE NOT NULL,
-	data_ultima_vez_tocada TIMESTAMP,
-	tempo_playlist DECIMAL(10,2),
-	nome_playlist VARCHAR(50)
+	tempo_total_execucao DECIMAL(10,2)
 );
-######################################################
-######################################################
 
-alter table peri_musi
-	add constraint peri_musi_PK primary key(peri_musi_id);
+------------------| CHAVES PRIMÁRIAS |------------------
 
-alter table compositor
-	add constraint compositor_PK primary key(compositor_id);
+ALTER TABLE periodo_musical
+	ADD CONSTRAINT periodo_musical_PK PRIMARY KEY (id_periodo);
 
-alter table tipo_interprete
-	add constraint tipo_interprete_PK primary key(tipo_interprete_id);
+ALTER TABLE compositor
+	ADD CONSTRAINT compositor_PK PRIMARY KEY (id_compositor);
 
-alter table interprete
-	add constraint interprete_PK primary key(interprete_id);
+ALTER TABLE faixa_compositor
+	ADD CONSTRAINT faixa_compositor_PK PRIMARY KEY (id_compositor, num_faixa, id_album);
 
-alter table tipo_composicao
-	add constraint tipo_composicao_PK primary key(tipo_composicao_id);
+ALTER TABLE tipo_interprete
+	ADD CONSTRAINT tipo_interprete_PK PRIMARY KEY (id_tipo_interprete);
 
-alter table playlist
-	add constraint playlist_PK primary key(playlist_id);
+ALTER TABLE interprete
+	ADD CONSTRAINT interprete_PK PRIMARY KEY (id_interprete);
 
-alter table gravadora
-	add constraint gravadora_PK primary key(gravadora_id);
+ALTER TABLE faixa_interprete
+	ADD CONSTRAINT faixa_interprete_PK PRIMARY KEY (id_interprete, num_faixa, id_album);
 
-alter table album
-	add constraint album_PK primary key(album_id);
+ALTER TABLE tipo_composicao
+	ADD CONSTRAINT tipo_composicao_PK PRIMARY KEY (id_tipo_composicao);
 
-######################################################
-######################################################
+ALTER TABLE telefone_gravadora
+	ADD CONSTRAINT telefone_gravadora_PK PRIMARY KEY (cod_gravadora, telefone);
 
-alter table compositor
-	add constraint comp_peri_musi_FK 
-		foreign key(peri_musi_id) 
-		references peri_musi;
+ALTER TABLE gravadora
+	ADD CONSTRAINT gravadora_PK PRIMARY KEY (cod_gravadora);
 
-alter table telefone_gravadora
-	add constraint tel_gra_gra_FK 
-		foreign key(gravadora_id)
-		references gravadora;
+ALTER TABLE album
+	ADD CONSTRAINT album_PK PRIMARY KEY (id_album);
 
-alter table album
-	add constraint alb_gra_FK 
-		foreign key(gravadora_id)
-		references gravadora;
+ALTER TABLE faixa
+	ADD CONSTRAINT faixa_PK PRIMARY KEY (num_faixa, id_album);
 
-alter table interprete
-	add constraint inter_tipo_inter_FK 
-		foreign key(tipo_interprete_id)
-		references tipo_interprete;
+ALTER TABLE faixa_playlist
+	ADD CONSTRAINT faixa_playlist_PK PRIMARY KEY (id_playlist, num_faixa, id_album);
 
-alter table faixa
-	add constraint faixa_tipo_comp_FK 
-		foreign key(tipo_composicao_id)
-		references tipo_composicao;
+ALTER TABLE playlist
+	ADD CONSTRAINT playlist_PK PRIMARY KEY (id_playlist);
 
-alter table faixa
-	add constraint faixa_album_FK 
-		foreign key(album_id)
-		references album;
 
-alter table faixa
-	add constraint faixa_PK
-		primary key(num_faixa,album_id);
+------------------| CHAVES ESTRANGEIRAS |------------------
 
-alter table compositor_faixa
-	add constraint comp_faixa_FK 
-		foreign key(compositor_id)
-		references compositor,
+ALTER TABLE compositor
+	ADD CONSTRAINT compositor_periodo_musical_FK 
+		FOREIGN KEY (id_periodo) 
+		REFERENCES periodo_musical;
 
-		foreign key(num_faixa,album_id)
-		references faixa;
+ALTER TABLE faixa_compositor
+	ADD CONSTRAINT faixa_compositor_comp_FK 
+		FOREIGN KEY (id_compositor)
+		REFERENCES compositor;
 
-alter table faixa_interprete
-	add constraint faixa_interprete_FK 
-		foreign key(interprete_id)
-		references interprete,
+ALTER TABLE faixa_compositor
+	ADD CONSTRAINT faixa_compositor_faixa_FK 
+		FOREIGN KEY (num_faixa, id_album)
+		REFERENCES faixa;
 
-		foreign key(num_faixa,album_id)
-		references faixa;
+ALTER TABLE interprete
+	ADD CONSTRAINT interprete_tipo_inter_FK 
+		FOREIGN KEY (id_tipo_interprete)
+		REFERENCES tipo_interprete;
 
-alter table album_faixa
-	add constraint album_faixa_FK 
-		foreign key(num_faixa,album_id)
-		references faixa;
+ALTER TABLE faixa_interprete
+	ADD CONSTRAINT faixa_interprete_inter_FK 
+		FOREIGN KEY (id_interprete)
+		REFERENCES interprete;
 
-alter table album_faixa_playlist
-	add constraint album_faixa_playlist_FK 
-		foreign key(playlist_id)
-		references playlist,
-		foreign key(num_faixa,album_id)
-		references faixa;
+ALTER TABLE faixa_interprete	
+	ADD CONSTRAINT faixa_interprete_faixa_FK 
+		FOREIGN KEY (num_faixa, id_album)
+		REFERENCES faixa;
+
+ALTER TABLE telefone_gravadora
+	ADD CONSTRAINT tel_gravadora_FK 
+		FOREIGN KEY (cod_gravadora)
+		REFERENCES gravadora;
+
+ALTER TABLE album
+	ADD CONSTRAINT album_gravadora_FK 
+		FOREIGN KEY (cod_gravadora)
+		REFERENCES gravadora;
+
+ALTER TABLE faixa
+	ADD CONSTRAINT faixa_tipo_composicao_FK 
+		FOREIGN KEY (id_tipo_composicao)
+		REFERENCES tipo_composicao;
+
+ALTER TABLE faixa
+	ADD CONSTRAINT faixa_album_FK 
+		FOREIGN KEY (id_album)
+		REFERENCES album;
+
+ALTER TABLE faixa_playlist
+	ADD CONSTRAINT faixa_playlist_play_FK 
+		FOREIGN KEY (id_playlist)
+		REFERENCES playlist;
+
+ALTER TABLE faixa_playlist
+	ADD CONSTRAINT faixa_playlist_faixa_FK 	
+		FOREIGN KEY (num_faixa, id_album)
+		REFERENCES faixa;
