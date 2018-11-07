@@ -142,59 +142,83 @@ ALTER TABLE playlist
 ALTER TABLE compositor
 	ADD CONSTRAINT compositor_periodo_musical_FK 
 		FOREIGN KEY (id_periodo) 
-		REFERENCES periodo_musical;
+		REFERENCES periodo_musical
+		ON DELETE NO ACTION
+		ON UPDATE CASCADE;
 
 ALTER TABLE faixa_compositor
 	ADD CONSTRAINT faixa_compositor_comp_FK 
 		FOREIGN KEY (id_compositor)
-		REFERENCES compositor;
+		REFERENCES compositor
+		ON DELETE NO ACTION
+		ON UPDATE CASCADE;
 
 ALTER TABLE faixa_compositor
 	ADD CONSTRAINT faixa_compositor_faixa_FK 
 		FOREIGN KEY (num_faixa, id_album)
-		REFERENCES faixa;
+		REFERENCES faixa (num_faixa, id_album)
+		ON DELETE NO ACTION
+		ON UPDATE CASCADE;
 
 ALTER TABLE interprete
 	ADD CONSTRAINT interprete_tipo_inter_FK 
 		FOREIGN KEY (id_tipo_interprete)
-		REFERENCES tipo_interprete;
+		REFERENCES tipo_interprete
+		ON DELETE NO ACTION
+		ON UPDATE CASCADE;
 
 ALTER TABLE faixa_interprete
 	ADD CONSTRAINT faixa_interprete_inter_FK 
 		FOREIGN KEY (id_interprete)
-		REFERENCES interprete;
+		REFERENCES interprete
+		ON DELETE NO ACTION
+		ON UPDATE CASCADE;
 
 ALTER TABLE faixa_interprete	
 	ADD CONSTRAINT faixa_interprete_faixa_FK 
 		FOREIGN KEY (num_faixa, id_album)
-		REFERENCES faixa;
+		REFERENCES faixa (num_faixa, id_album)
+		ON DELETE NO ACTION
+		ON UPDATE CASCADE;
 
 ALTER TABLE telefone_gravadora
 	ADD CONSTRAINT tel_gravadora_FK 
 		FOREIGN KEY (cod_gravadora)
-		REFERENCES gravadora;
+		REFERENCES gravadora
+		ON DELETE NO ACTION
+		ON UPDATE CASCADE;
 
 ALTER TABLE album
 	ADD CONSTRAINT album_gravadora_FK 
 		FOREIGN KEY (cod_gravadora)
-		REFERENCES gravadora;
+		REFERENCES gravadora
+		ON DELETE NO ACTION
+		ON UPDATE CASCADE;
 
 ALTER TABLE faixa
 	ADD CONSTRAINT faixa_tipo_composicao_FK 
 		FOREIGN KEY (id_tipo_composicao)
-		REFERENCES tipo_composicao;
+		REFERENCES tipo_composicao
+		ON DELETE NO ACTION
+		ON UPDATE CASCADE;
 
 ALTER TABLE faixa
 	ADD CONSTRAINT faixa_album_FK 
 		FOREIGN KEY (id_album)
-		REFERENCES album;
+		REFERENCES album
+		ON DELETE NO ACTION
+		ON UPDATE CASCADE;
 
 ALTER TABLE faixa_playlist
 	ADD CONSTRAINT faixa_playlist_play_FK 
 		FOREIGN KEY (id_playlist)
-		REFERENCES playlist;
+		REFERENCES playlist
+		ON DELETE CASCADE
+		ON UPDATE CASCADE;
 
 ALTER TABLE faixa_playlist
 	ADD CONSTRAINT faixa_playlist_faixa_FK 	
 		FOREIGN KEY (num_faixa, id_album)
-		REFERENCES faixa;
+		REFERENCES faixa (num_faixa, id_album)
+		ON DELETE NO ACTION
+		ON UPDATE CASCADE;
