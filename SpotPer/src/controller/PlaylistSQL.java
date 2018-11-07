@@ -5,6 +5,7 @@
  */
 package controller;
 
+import Model.Album;
 import Model.Faixa;
 import Model.Playlist;
 import java.util.List;
@@ -48,7 +49,7 @@ public class PlaylistSQL extends ExecuteSQL {
         }
     }
 
-    public String adicionaFaixaPlaylist(Faixa f, Playlist p) {
+    public String adicionaFaixaPlaylist(Playlist p, Faixa f) {
         String sql = "INSERT INTO playlist_faixa VALUES (? ? ?)";
 
         try {
@@ -57,6 +58,29 @@ public class PlaylistSQL extends ExecuteSQL {
             ps.setInt(1, p.getIdPlaylist());
             ps.setInt(2, f.getIdAlbum());
             ps.setInt(3, f.getNumFaixa());
+
+            if (ps.executeUpdate() > 0) {
+                return "Faixa adicionada com sucesso!";
+            } else {
+                return "Erro ao adicionar Faixa";
+            }
+
+        } catch (SQLException e) {
+            return e.getMessage();
+        }
+    }
+    
+    public String adicionaAlbumPlaylist(Playlist p, Album a) {
+        // Fazer um while que percorre todas as musicas do album 
+        // adicionando na playlist
+        String sql = "INSERT INTO playlist_faixa VALUES (? ? ?)";
+
+        try {
+            PreparedStatement ps = getConn().prepareStatement(sql);
+
+            ps.setInt(1, p.getIdPlaylist());
+            ps.setInt(2, a.getIdAlbum());
+            // ps.setInt(3, a.getNumFaixa());
 
             if (ps.executeUpdate() > 0) {
                 return "Faixa adicionada com sucesso!";
