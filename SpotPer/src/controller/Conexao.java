@@ -20,7 +20,6 @@ public class Conexao {
         Connection conn = null;
         try {
 
-            
             /* CONEXAO SQL SERVER (ERRO)
             
             String url = "jdbc:sqlserver://MYPC\\SQLEXPRESS;databaseName=MYDB"; // Config 1
@@ -32,13 +31,11 @@ public class Conexao {
             conn = DriverManager.getConnection(url); // Config 2
              */
             
-            /* CONEXAO POSTGRES
-            */
-            
+            /* CONEXAO POSTGRES (Ok) */
             
             String userName = "postgres";
-            String password = "admin";
-            String url = "jdbc:postgresql://localhost:49917/spotper";
+            String password = "brasil158";
+            String url = "jdbc:postgresql://localhost:5432/spotper";
             
             Class.forName("org.postgresql.Driver");
             conn = DriverManager.getConnection(url, userName, password);
