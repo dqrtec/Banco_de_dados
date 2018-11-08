@@ -16,7 +16,7 @@ CREATE TABLE compositor(
 	data_morte DATE,
 	pais VARCHAR(50) NOT NULL,
 	cidade VARCHAR(50) NOT NULL,
-	id_periodo SMALLINT NOT NULL,
+	id_periodo SMALLINT NOT NULL
 );
 
 CREATE TABLE faixa_compositor(
