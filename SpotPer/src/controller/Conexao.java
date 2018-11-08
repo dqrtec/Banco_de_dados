@@ -3,10 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller;
+package Controller;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
 /**
@@ -18,17 +19,48 @@ public class Conexao {
     public static Connection arirConexao() {
         Connection conn = null;
         try {
+
+            
+            /* CONEXAO SQL SERVER (ERRO)
+            
+            String url = "jdbc:sqlserver://MYPC\\SQLEXPRESS;databaseName=MYDB"; // Config 1
+            String url = "jdbc:sqlserver://ZOSO-WIN\\SQLEXPRESS;databaseName=spotper;integratedSecurity=true"; // Config 2
+
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+
+            conn = DriverManager.getConnection(url, userName, password); // Config 1
+            conn = DriverManager.getConnection(url); // Config 2
+             */
+            
+            /* CONEXAO POSTGRES
+            */
+            
+            
+            String userName = "tibet";
+            String password = "";
+            String url = "jdbc:postgresql://hostname:5432/spotper";
+            
+            Class.forName("org.postgresql.Driver");
+            conn = DriverManager.getConnection(url, userName, password);
+            //connection.close();
+            
+            /* Mysql Connection (ok)
+            
             Class.forName("com.mysql.jdbc.Driver");
             String url = "jdbc:mysql://localhost/spotper";
             conn = DriverManager.getConnection(url, "root", "");
-        } catch (Exception e) {
+            */
+            
+        } catch (ClassNotFoundException cnfe) {
+            cnfe.printStackTrace();
+        } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Erro na conexão com o Banco",
                     "SpotPer", JOptionPane.ERROR_MESSAGE);
-            e.getMessage();
+            ex.printStackTrace();
         }
         return conn;
     }
-    
+
     public static void fecharConexao(Connection conn) {
         try {
             conn.close();
