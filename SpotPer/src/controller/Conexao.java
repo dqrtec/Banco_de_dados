@@ -36,13 +36,12 @@ public class Conexao {
             */
             
             
-            String userName = "tibet";
-            String password = "";
-            String url = "jdbc:postgresql://hostname:5432/spotper";
+            String userName = "postgres";
+            String password = "admin";
+            String url = "jdbc:postgresql://localhost:49917/spotper";
             
             Class.forName("org.postgresql.Driver");
             conn = DriverManager.getConnection(url, userName, password);
-            //connection.close();
             
             /* Mysql Connection (ok)
             
