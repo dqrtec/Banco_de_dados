@@ -5,9 +5,15 @@
  */
 package View;
 
+import Model.Faixa;
+import Controller.Conexao;
+import Controller.FaixaSQL;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.KeyEvent;
+import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.*;
 
 /**
@@ -44,6 +50,8 @@ public class TelaInicial extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(40, 40, 40));
+
+        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
 
         labelTitulo.setFont(new java.awt.Font("Old English Text MT", 0, 36)); // NOI18N
         labelTitulo.setText("Spotper");
@@ -163,7 +171,7 @@ public class TelaInicial extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void menuMusicaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuMusicaMouseClicked
-        // TODO add your handling code here:
+       pesquisaFaixa();
     }//GEN-LAST:event_menuMusicaMouseClicked
 
     private void menuArtistaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuArtistaMouseClicked
@@ -194,6 +202,19 @@ public class TelaInicial extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, strTexto);
         }
     }//GEN-LAST:event_jTextBuscarKeyPressed
+
+    public void pesquisaFaixa() {
+        Connection conn = Conexao.arirConexao();
+        FaixaSQL fsql = new FaixaSQL(conn);
+        List<Faixa> listaFaixa = new ArrayList();
+        listaFaixa = fsql.listarFaixas();
+        String faixas;
+        for (Faixa fx : listaFaixa) {
+            faixas = "Número: " + fx.getNumFaixa() + " Álbum: " + fx.getIdAlbum();
+            JOptionPane.showMessageDialog(null, faixas);
+        }
+        Conexao.fecharConexao(conn);
+    }
 
     /**
      * @param args the command line arguments
