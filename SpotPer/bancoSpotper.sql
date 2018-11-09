@@ -1,4 +1,39 @@
-CREATE DATABASE spotper;
+CREATE DATABASE BDspotPer
+on PRIMARY(
+		NAME = 'spotper',
+		FILENAME = 'C:\BDspotPer\spotper.mdf',
+		SIZE = 1024KB,
+		FILEGROWTH = 1024KB
+	),
+
+	FILEGROUP spot_fg01(
+			NAME = 'arquivo01',
+			FILENAME = 'C:\BDspotPer\arquivo01.ndf',
+			SIZE = 1024KB,
+			FILEGROWTH = 30%
+		),
+		(
+			NAME = 'arquivo02',
+			FILENAME = 'C:\BDspotPer\arquivo02.ndf',
+			SIZE = 1024KB,
+			FILEGROWTH = 30%
+		),
+
+	FILEGROUP spot_fg02(
+			NAME = 'arquivo03',
+			FILENAME = 'C:\BDspotPer\arquivo03.ndf',
+			SIZE = 1024KB,
+			FILEGROWTH = 30%
+		),
+
+	LOG ON(
+		NAME = 'spotper_log',
+		FILENAME = 'C:\BDspotPer\spotper_log.ldf',
+		SIZE = 1024KB,
+		FILEGROWTH = 10%
+	)
+
+;
 
 ------------------| TABELAS |------------------
 
