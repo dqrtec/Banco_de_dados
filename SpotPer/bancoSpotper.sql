@@ -42,7 +42,7 @@ CREATE TABLE periodo_musical(
 	inicio_periodo DATE NOT NULL,
 	fim_periodo DATE,
 	descricao VARCHAR(50) NOT NULL
-);
+)on spot_fg01;
 
 CREATE TABLE compositor(
 	id_compositor INT NOT NULL,
@@ -52,40 +52,40 @@ CREATE TABLE compositor(
 	pais VARCHAR(50) NOT NULL,
 	cidade VARCHAR(50) NOT NULL,
 	id_periodo SMALLINT NOT NULL
-);
+)on spot_fg01;
 
 CREATE TABLE faixa_compositor(
 	id_compositor INT NOT NULL,
 	num_faixa SMALLINT NOT NULL,
 	id_album INT NOT NULL
-);
+)on spot_fg01;
 
 CREATE TABLE tipo_interprete(
 	id_tipo_interprete SMALLINT NOT NULL,
 	tipo VARCHAR(50) NOT NULL
-);
+)on spot_fg01;
 
 CREATE TABLE interprete(
 	id_interprete INT NOT NULL,
 	id_tipo_interprete SMALLINT NOT NULL,
 	nome VARCHAR(50)
-);
+)on spot_fg01;
 
 CREATE TABLE faixa_interprete(
 	id_interprete INT NOT NULL,
 	num_faixa SMALLINT NOT NULL,
 	id_album INT NOT NULL
-);
+)on spot_fg01;
 
 CREATE TABLE tipo_composicao(
 	id_tipo_composicao SMALLINT NOT NULL,
 	descricao VARCHAR(50) NOT NULL
-);
+)on spot_fg01;
 
 CREATE TABLE telefone_gravadora(
 	cod_gravadora INT NOT NULL,
 	telefone VARCHAR(20) NOT NULL
-);
+)on spot_fg01;
 
 CREATE TABLE gravadora(
 	cod_gravadora INT NOT NULL,
@@ -94,7 +94,7 @@ CREATE TABLE gravadora(
 	pais VARCHAR(50) NOT NULL,
 	cidade VARCHAR(50) NOT NULL,
 	rua VARCHAR(50) NOT NULL
-);
+)on spot_fg01;
 
 CREATE TABLE album(
 	id_album INT NOT NULL,
@@ -104,7 +104,7 @@ CREATE TABLE album(
 	data_compra DATE,
 	preco_compra DECIMAL(10,2),
 	cod_gravadora INT NOT NULL
-);
+)on spot_fg01;
 
 CREATE TABLE faixa(
 	num_faixa SMALLINT NOT NULL,
@@ -113,7 +113,7 @@ CREATE TABLE faixa(
 	tempo_duracao DECIMAL(10,2) NOT NULL,
 	tipo_gravacao VARCHAR (3) NOT NULL,
 	id_tipo_composicao SMALLINT NOT NULL
-);
+)on spot_fg02;
 
 CREATE TABLE faixa_playlist(
 	id_playlist INT NOT NULL,
@@ -121,14 +121,14 @@ CREATE TABLE faixa_playlist(
 	num_faixa SMALLINT NOT NULL,
 	quantidade_tocada INT,
 	data_ultima_vez_tocada DATE
-);
+)on spot_fg02;
 
 CREATE TABLE playlist(
 	id_playlist INT NOT NULL,
 	nome VARCHAR(50) NOT NULL,
 	data_criacao DATE NOT NULL,
 	tempo_total_execucao DECIMAL(10,2)
-);
+)on spot_fg02;
 
 ------------------| CHAVES PRIMÁRIAS |------------------
 
@@ -257,3 +257,21 @@ ALTER TABLE faixa_playlist
 		REFERENCES faixa (num_faixa, id_album)
 		ON DELETE NO ACTION
 		ON UPDATE CASCADE;
+
+------------------| CONSULTAS |------------------
+
+CREATE VIEW playlist_qtd_album
+WITH SCHEMABINDING
+AS
+	SELECT p.nome , count(distinct(f.num_faixa))
+	FROM playlist p, faixa_playlist fp,faixa f
+	WHERE 
+		p.id_playlist = fp.id_playlist AND
+		fp.id_album = f.id_album AND
+		fp.num_faixa = f.num_faixa
+	GROUP BY p.id_playlist , p.nome
+GO
+
+CREATE UNIQUE CLUSTERED INDEX indx_play_qtd_faixa
+  ON playlist_qtd_album(nome)
+GO
