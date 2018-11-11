@@ -24,7 +24,7 @@ on PRIMARY(
 			FILENAME = 'C:\BDspotPer\arquivo03.ndf',
 			SIZE = 1024KB,
 			FILEGROWTH = 30%
-		),
+		)
 
 	LOG ON(
 		NAME = 'spotper_log',
@@ -32,8 +32,7 @@ on PRIMARY(
 		SIZE = 1024KB,
 		FILEGROWTH = 10%
 	)
-
-;
+GO
 
 ------------------| TABELAS |------------------
 
@@ -260,16 +259,16 @@ ALTER TABLE faixa_playlist
 
 ------------------| CONSULTAS |------------------
 
-CREATE VIEW playlist_qtd_album
-WITH SCHEMABINDING
+CREATE VIEW playlist_qtd_album(nome,qtd)
+With SchemaBinding
 AS
-	SELECT p.nome , count(distinct(f.num_faixa))
-	FROM playlist p, faixa_playlist fp,faixa f
+	SELECT p.nome , count_big(f.id_album) as 'Quantidade Album'
+	FROM dbo.playlist p, dbo.faixa_playlist fp,dbo.faixa f
 	WHERE 
 		p.id_playlist = fp.id_playlist AND
 		fp.id_album = f.id_album AND
 		fp.num_faixa = f.num_faixa
-	GROUP BY p.id_playlist , p.nome
+	GROUP BY p.id_playlist , p.nome 
 GO
 
 CREATE UNIQUE CLUSTERED INDEX indx_play_qtd_faixa
