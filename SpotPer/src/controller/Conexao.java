@@ -19,33 +19,12 @@ public class Conexao {
     public static Connection arirConexao() {
         Connection conn = null;
         try {
-
-            /* CONEXAO SQL SERVER (ERRO)
+            String userName = "sa";
+            String password = "brasil158";            
+            String url = "jdbc:sqlserver://ZOSO-WIN\\SQLSERVER;databaseName=spotper";
             
-            String url = "jdbc:sqlserver://MYPC\\SQLEXPRESS;databaseName=MYDB"; // Config 1
-            String url = "jdbc:sqlserver://ZOSO-WIN\\SQLEXPRESS;databaseName=spotper;integratedSecurity=true"; // Config 2
-
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-
-            conn = DriverManager.getConnection(url, userName, password); // Config 1
-            conn = DriverManager.getConnection(url); // Config 2
-             */
-            
-            /* CONEXAO POSTGRES (Ok) */
-            
-            String userName = "postgres";
-            String password = "brasil158";
-            String url = "jdbc:postgresql://localhost:5432/spotper";
-            
-            Class.forName("org.postgresql.Driver");
             conn = DriverManager.getConnection(url, userName, password);
-            
-            /* Mysql Connection (ok)
-            
-            Class.forName("com.mysql.jdbc.Driver");
-            String url = "jdbc:mysql://localhost/spotper";
-            conn = DriverManager.getConnection(url, "root", "");
-            */
             
         } catch (ClassNotFoundException cnfe) {
             cnfe.printStackTrace();
