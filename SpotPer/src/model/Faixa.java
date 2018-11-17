@@ -5,12 +5,22 @@ package Model;
  * @author Tibet Teixeira
  */
 public class Faixa {
+
     int idAlbum;
     int numFaixa;
     int idComposicao;
     float tempoDuracao;
     String descricao;
     String tipoGravacao;
+    String descricaoComposicao;
+
+    public String getDescricaoComposicao() {
+        return descricaoComposicao;
+    }
+
+    public void setDescricaoComposicao(String descricaoComposicao) {
+        this.descricaoComposicao = descricaoComposicao;
+    }
 
     public int getIdAlbum() {
         return idAlbum;
@@ -59,6 +69,5 @@ public class Faixa {
     public void setTipoGravacao(String tipoGravacao) {
         this.tipoGravacao = tipoGravacao;
     }
-             
-   
+
 }

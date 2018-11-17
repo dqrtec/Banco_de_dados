@@ -16,7 +16,7 @@ import javax.swing.JOptionPane;
  */
 public class Conexao {
 
-    public static Connection arirConexao() {
+    public static Connection abrirConexao() {
         Connection conn = null;
         try {
             String userName = "sa";

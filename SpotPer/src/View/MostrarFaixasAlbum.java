@@ -5,20 +5,29 @@
  */
 package View;
 
+import Controller.Conexao;
+import Controller.FaixaSQL;
+import Model.Faixa;
 import java.awt.event.KeyEvent;
+import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author Tibet Teixeira
  */
-public class FormBase extends javax.swing.JFrame {
+public class MostrarFaixasAlbum extends javax.swing.JFrame {
 
     /**
-     * Creates new form FormBase
+     * Creates new form MostrarFaixasAlbum
      */
-    public FormBase() {
+    public MostrarFaixasAlbum(int idAlbum, String descricao) {
         initComponents();
+        labelTitulo.setText(descricao);
+        atualizaTabelaFaixas(idAlbum);
     }
 
     /**
@@ -33,6 +42,8 @@ public class FormBase extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         labelTitulo = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tabelaFaixas = new javax.swing.JTable();
         menuMusica = new javax.swing.JLabel();
         menuArtista = new javax.swing.JLabel();
         menuAlbum = new javax.swing.JLabel();
@@ -49,6 +60,27 @@ public class FormBase extends javax.swing.JFrame {
         labelTitulo.setFont(new java.awt.Font("Old English Text MT", 0, 36)); // NOI18N
         labelTitulo.setText("Spotper");
 
+        tabelaFaixas.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "#", "Descrição", "Duração", "Tipo", "Gênero"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(tabelaFaixas);
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -57,13 +89,19 @@ public class FormBase extends javax.swing.JFrame {
                 .addGap(369, 369, 369)
                 .addComponent(labelTitulo)
                 .addContainerGap(347, Short.MAX_VALUE))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1)
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(40, 40, 40)
                 .addComponent(labelTitulo)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1)
+                .addContainerGap())
         );
 
         menuMusica.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -111,7 +149,7 @@ public class FormBase extends javax.swing.JFrame {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 520, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 532, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(41, 41, 41)
                 .addComponent(jTextBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -123,7 +161,7 @@ public class FormBase extends javax.swing.JFrame {
                 .addComponent(menuAlbum)
                 .addGap(18, 18, 18)
                 .addComponent(menuPlaylist)
-                .addContainerGap(271, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -140,10 +178,6 @@ public class FormBase extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextBuscarActionPerformed
-
-    }//GEN-LAST:event_jTextBuscarActionPerformed
-
     private void jTextBuscarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextBuscarKeyPressed
 
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -151,6 +185,10 @@ public class FormBase extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, strTexto);
         }
     }//GEN-LAST:event_jTextBuscarKeyPressed
+
+    private void jTextBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextBuscarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextBuscarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -169,32 +207,56 @@ public class FormBase extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FormBase.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MostrarFaixasAlbum.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FormBase.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MostrarFaixasAlbum.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FormBase.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MostrarFaixasAlbum.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FormBase.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MostrarFaixasAlbum.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FormBase().setVisible(true);
+                //new MostrarFaixasAlbum().setVisible(true);
             }
         });
+    }
+
+    private void atualizaTabelaFaixas(int idAlbum) {
+        Connection conn = Conexao.abrirConexao();
+        FaixaSQL faixaSQL = new FaixaSQL(conn);
+        List<Faixa> lista = new ArrayList();
+        lista = faixaSQL.listarFaixasAlbum(idAlbum);
+        DefaultTableModel tbm = (DefaultTableModel) tabelaFaixas.getModel();
+        while (tbm.getRowCount() > 0) {
+            tbm.removeRow(0);
+        }
+        int i = 0;
+        for (Faixa tab : lista) {
+            tbm.addRow(new String[i]);
+            tabelaFaixas.setValueAt(tab.getNumFaixa(), i, 0);
+            tabelaFaixas.setValueAt(tab.getDescricao(), i, 1);
+            tabelaFaixas.setValueAt(tab.getTempoDuracao(), i, 2);
+            tabelaFaixas.setValueAt(tab.getTipoGravacao(), i, 3);
+            tabelaFaixas.setValueAt(tab.getDescricaoComposicao(), i, 4);
+            i++;
+        }
+        Conexao.fecharConexao(conn);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextBuscar;
     private javax.swing.JLabel labelTitulo;
     private javax.swing.JLabel menuAlbum;
     private javax.swing.JLabel menuArtista;
     private javax.swing.JLabel menuMusica;
     private javax.swing.JLabel menuPlaylist;
+    private javax.swing.JTable tabelaFaixas;
     // End of variables declaration//GEN-END:variables
 }

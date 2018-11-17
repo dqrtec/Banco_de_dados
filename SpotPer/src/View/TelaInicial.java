@@ -8,17 +8,16 @@ package View;
 import Model.Faixa;
 import Controller.Conexao;
 import Controller.FaixaSQL;
-import java.awt.Color;
-import java.awt.Dimension;
+
 import java.awt.event.KeyEvent;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.*;
+import javax.swing.JOptionPane;
 
 /**
  *
- * @author tibet
+ * @author Tibet Teixeira
  */
 public class TelaInicial extends javax.swing.JFrame {
 
@@ -171,7 +170,7 @@ public class TelaInicial extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void menuMusicaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuMusicaMouseClicked
-       pesquisaFaixa();
+        pesquisaFaixa();
     }//GEN-LAST:event_menuMusicaMouseClicked
 
     private void menuArtistaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuArtistaMouseClicked
@@ -179,12 +178,8 @@ public class TelaInicial extends javax.swing.JFrame {
     }//GEN-LAST:event_menuArtistaMouseClicked
 
     private void menuAlbumMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuAlbumMouseClicked
-        JFrame jf = new JFrame("new one");
-        jf.setBackground(Color.ORANGE);
-        jf.setSize(new Dimension(200, 200));
-        jf.setVisible(true);
+        new MostrarAlbum().setVisible(true);
         this.setVisible(false);
-        jf.setDefaultCloseOperation(EXIT_ON_CLOSE);
     }//GEN-LAST:event_menuAlbumMouseClicked
 
     private void menuPlaylistMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuPlaylistMouseClicked
@@ -204,7 +199,7 @@ public class TelaInicial extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextBuscarKeyPressed
 
     public void pesquisaFaixa() {
-        Connection conn = Conexao.arirConexao();
+        Connection conn = Conexao.abrirConexao();
         FaixaSQL fsql = new FaixaSQL(conn);
         List<Faixa> listaFaixa = new ArrayList();
         listaFaixa = fsql.listarFaixas();

@@ -13,6 +13,15 @@ public class Album {
    String dataGravacao;
    String descricao;
    String dataCompra;
+   String nomeGravadora;
+
+    public String getNomeGravadora() {
+        return nomeGravadora;
+    }
+
+    public void setNomeGravadora(String nomeGravadora) {
+        this.nomeGravadora = nomeGravadora;
+    }
 
     public int getIdAlbum() {
         return idAlbum;
