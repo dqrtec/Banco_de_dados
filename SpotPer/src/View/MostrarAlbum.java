@@ -203,10 +203,10 @@ public class MostrarAlbum extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextBuscarKeyPressed
 
     private void tabelaAlbunsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaAlbunsMouseClicked
-        Integer row = tabelaAlbuns.getSelectedRow();
+        int row = tabelaAlbuns.getSelectedRow();
         int idAlbum = (int) tabelaAlbuns.getValueAt(row, 0);
         String descricao = (String) tabelaAlbuns.getValueAt(row, 1);
-        
+
         new MostrarFaixasAlbum(idAlbum, descricao).setVisible(true);
         this.setVisible(false);
     }//GEN-LAST:event_tabelaAlbunsMouseClicked

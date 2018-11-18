@@ -48,27 +48,28 @@ public class PlaylistSQL extends ExecuteSQL {
         }
     }
 
-    public String adicionaFaixaPlaylist(Playlist p, Faixa f) {
-        String sql = "INSERT INTO playlist_faixa VALUES (? ? ? ? ?)";
-
+    public void adicionaFaixaPlaylist(Playlist p, Faixa f) {
+        String sql = "INSERT INTO faixa_playlist "
+                + "(id_playlist, id_album, num_faixa, quantidade_tocada) "
+                + "VALUES (? ? ? ?)";
+        
         try {
             PreparedStatement ps = getConn().prepareStatement(sql);
 
             ps.setInt(1, p.getIdPlaylist());
             ps.setInt(2, f.getIdAlbum());
             ps.setInt(3, f.getNumFaixa());
-            ps.setInt(4, 0); // Quantidade tocada
-            ps.setString(5, null); // Data última vez reproduzida
-
+            ps.setFloat(4, 0);
+            
             if (ps.executeUpdate() > 0) {
+                System.out.println("Faixa adicionada com sucesso!");
                 alteraPlaylist(p, p.getTempoTotalExecucao() + f.getTempoDuracao());
-                return "Faixa adicionada com sucesso!";
             } else {
-                return "Erro ao adicionar Faixa";
+                System.out.println("Erro ao adicionar Faixa");
             }
 
         } catch (SQLException e) {
-            return e.getMessage();
+            e.printStackTrace();
         }
     }
 
@@ -95,6 +96,36 @@ public class PlaylistSQL extends ExecuteSQL {
         }
     }
 
+    public List<Playlist> listarPlaylist() {
+        String sql = "SELECT id_playlist, nome, data_criacao, tempo_total_execucao "
+                + "FROM playlist";
+        
+        List<Playlist> listaPlaylist = new ArrayList();
+        try {
+            PreparedStatement ps = getConn().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs != null) {
+                while (rs.next()) {
+                    Playlist p = new Playlist();
+
+                    p.setIdPlaylist(rs.getInt(1));
+                    p.setNome(rs.getString(2));
+                    p.setDataCriacao(rs.getString(3));
+                    p.setTempoTotalExecucao(rs.getFloat(4));
+
+                    listaPlaylist.add(p);
+                }
+                return listaPlaylist;
+            } else {
+                return null;
+            }
+
+        } catch (Exception e) {
+            return null;
+        }
+    }
+    
     public List<Playlist> listarPlaylist(String nome) {
         String sql = "SELECT id_playlist, nome, data_criacao, tempo_total_execucao "
                 + "FROM playlist WHERE nome LIKE '%" + nome + "%'";

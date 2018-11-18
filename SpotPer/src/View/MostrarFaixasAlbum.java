@@ -7,12 +7,21 @@ package View;
 
 import Controller.Conexao;
 import Controller.FaixaSQL;
+import Controller.PlaylistSQL;
 import Model.Faixa;
+import Model.Playlist;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JPopupMenu;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -21,13 +30,13 @@ import javax.swing.table.DefaultTableModel;
  */
 public class MostrarFaixasAlbum extends javax.swing.JFrame {
 
-    /**
-     * Creates new form MostrarFaixasAlbum
-     */
+    private int idAlbum;
+
     public MostrarFaixasAlbum(int idAlbum, String descricao) {
         initComponents();
+        this.idAlbum = idAlbum;
         labelTitulo.setText(descricao);
-        atualizaTabelaFaixas(idAlbum);
+        atualizaTabelaFaixas();
     }
 
     /**
@@ -77,6 +86,11 @@ public class MostrarFaixasAlbum extends javax.swing.JFrame {
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        tabelaFaixas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabelaFaixasMouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(tabelaFaixas);
@@ -190,6 +204,67 @@ public class MostrarFaixasAlbum extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextBuscarActionPerformed
 
+    private void tabelaFaixasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaFaixasMouseClicked
+        int row = tabelaFaixas.getSelectedRow();
+        int numFaixa = (int) tabelaFaixas.getValueAt(row, 0);
+
+        JPopupMenu jPopupMenu = new JPopupMenu();
+
+        JMenuItem menuItemTocar = new JMenuItem("Tocar");
+        JMenuItem menuItemArtista = new JMenuItem("Ir para artista");
+        JMenu menuItemPlaylist = new JMenu("Adicionar à Playlist");
+        JMenuItem menuCriarPlaylist = new JMenuItem("Nova Playlist");
+
+        jPopupMenu.add(menuItemTocar);
+        jPopupMenu.add(menuItemArtista);
+        jPopupMenu.add(menuItemPlaylist);
+        menuItemPlaylist.add(menuCriarPlaylist);
+
+        List<Playlist> listaPlaylist = listarPlaylists();
+
+        for (Playlist playlist : listaPlaylist) {
+            JMenuItem playlistSelected = new JMenuItem(playlist.getNome());
+            menuItemPlaylist.add(playlistSelected);
+            playlistSelected.addActionListener(
+                    new java.awt.event.ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    int row = tabelaFaixas.getSelectedRow();
+                    int numFaixa = (int) tabelaFaixas.getValueAt(row, 0);
+
+                    Faixa faixa = selecionaFaixa(numFaixa);
+                    adicionarFaixaPlaylist(playlist, faixa);
+                }
+            });
+        }
+
+        menuItemTocar.addActionListener(
+                new java.awt.event.ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                int row = tabelaFaixas.getSelectedRow();
+                int numFaixa = (int) tabelaFaixas.getValueAt(row, 0);
+                System.out.println("Número da faixa 1 - " + numFaixa);
+            }
+        });
+
+        menuItemArtista.addActionListener(
+                new java.awt.event.ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                int row = tabelaFaixas.getSelectedRow();
+                int numFaixa = (int) tabelaFaixas.getValueAt(row, 0);
+                System.out.println("Número da faixa 1 - " + numFaixa);
+            }
+        });
+
+        tabelaFaixas.addMouseListener(
+                new java.awt.event.MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                if (e.getButton() == MouseEvent.BUTTON3) {
+                    jPopupMenu.show(tabelaFaixas, e.getX(), e.getY());
+                }
+            }
+        });
+    }//GEN-LAST:event_tabelaFaixasMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -225,11 +300,11 @@ public class MostrarFaixasAlbum extends javax.swing.JFrame {
         });
     }
 
-    private void atualizaTabelaFaixas(int idAlbum) {
+    private void atualizaTabelaFaixas() {
         Connection conn = Conexao.abrirConexao();
         FaixaSQL faixaSQL = new FaixaSQL(conn);
-        List<Faixa> lista = new ArrayList();
-        lista = faixaSQL.listarFaixasAlbum(idAlbum);
+        List<Faixa> lista;
+        lista = faixaSQL.listarFaixasAlbum(this.idAlbum);
         DefaultTableModel tbm = (DefaultTableModel) tabelaFaixas.getModel();
         while (tbm.getRowCount() > 0) {
             tbm.removeRow(0);
@@ -245,6 +320,31 @@ public class MostrarFaixasAlbum extends javax.swing.JFrame {
             i++;
         }
         Conexao.fecharConexao(conn);
+    }
+
+    private List<Playlist> listarPlaylists() {
+        Connection conn = Conexao.abrirConexao();
+        PlaylistSQL playlistSQL = new PlaylistSQL(conn);
+        List<Playlist> lista = playlistSQL.listarPlaylist();
+        Conexao.fecharConexao(conn);
+
+        return lista;
+    }
+
+    private void adicionarFaixaPlaylist(Playlist p, Faixa f) {
+        Connection conn = Conexao.abrirConexao();
+        PlaylistSQL playlistSQL = new PlaylistSQL(conn);
+        playlistSQL.adicionaFaixaPlaylist(p, f);
+        Conexao.fecharConexao(conn);
+    }
+
+    private Faixa selecionaFaixa(int numFaixa) {
+        Connection conn = Conexao.abrirConexao();
+        FaixaSQL faixaSQL = new FaixaSQL(conn);
+        Faixa faixa = faixaSQL.listaFaixa(this.idAlbum, numFaixa);
+        Conexao.fecharConexao(conn);
+
+        return faixa;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
