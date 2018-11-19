@@ -52,7 +52,7 @@ public class PlaylistSQL extends ExecuteSQL {
         String sql = "INSERT INTO faixa_playlist "
                 + "(id_playlist, id_album, num_faixa, quantidade_tocada) "
                 + "VALUES (?, ?, ?, ?)";
-        
+
         try {
             PreparedStatement ps = getConn().prepareStatement(sql);
 
@@ -60,7 +60,7 @@ public class PlaylistSQL extends ExecuteSQL {
             ps.setInt(2, f.getIdAlbum());
             ps.setInt(3, f.getNumFaixa());
             ps.setFloat(4, 0);
-            
+
             if (ps.executeUpdate() > 0) {
                 System.out.println("Faixa adicionada com sucesso!");
                 alteraPlaylist(p, p.getTempoTotalExecucao() + f.getTempoDuracao());
@@ -73,33 +73,21 @@ public class PlaylistSQL extends ExecuteSQL {
         }
     }
 
-    public String adicionaAlbumPlaylist(Playlist p, Album a) {
-        // Fazer um while que percorre todas as musicas do album 
-        // adicionando na playlist
-        String sql = "INSERT INTO playlist_faixa VALUES (? ? ?)";
+    public void adicionaAlbumPlaylist(Playlist p, Album a) {
+        Connection conn = Conexao.abrirConexao();
+        FaixaSQL fsql = new FaixaSQL(conn);
+        List<Faixa> listaFaixasAlbum = fsql.listarFaixasAlbum(a.getIdAlbum());
+        Conexao.fecharConexao(conn);
 
-        try {
-            PreparedStatement ps = getConn().prepareStatement(sql);
-
-            ps.setInt(1, p.getIdPlaylist());
-            ps.setInt(2, a.getIdAlbum());
-            // ps.setInt(3, a.getNumFaixa());
-
-            if (ps.executeUpdate() > 0) {
-                return "Faixa adicionada com sucesso!";
-            } else {
-                return "Erro ao adicionar Faixa";
-            }
-
-        } catch (SQLException e) {
-            return e.getMessage();
+        for (Faixa f : listaFaixasAlbum) {
+            adicionaFaixaPlaylist(p, f);
         }
     }
 
     public List<Playlist> listarPlaylist() {
         String sql = "SELECT id_playlist, nome, data_criacao, tempo_total_execucao "
                 + "FROM playlist";
-        
+
         List<Playlist> listaPlaylist = new ArrayList();
         try {
             PreparedStatement ps = getConn().prepareStatement(sql);
@@ -125,7 +113,7 @@ public class PlaylistSQL extends ExecuteSQL {
             return null;
         }
     }
-    
+
     public List<Playlist> listarPlaylist(String nome) {
         String sql = "SELECT id_playlist, nome, data_criacao, tempo_total_execucao "
                 + "FROM playlist WHERE nome LIKE '%" + nome + "%'";
