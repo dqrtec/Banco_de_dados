@@ -76,7 +76,7 @@ public class PlaylistSQL extends ExecuteSQL {
     public void adicionaAlbumPlaylist(Playlist p, Album a) {
         Connection conn = Conexao.abrirConexao();
         FaixaSQL fsql = new FaixaSQL(conn);
-        List<Faixa> listaFaixasAlbum = fsql.listarFaixasAlbum(a.getIdAlbum());
+        List<Faixa> listaFaixasAlbum = fsql.listarFaixasAlbum(a);
         Conexao.fecharConexao(conn);
 
         for (Faixa f : listaFaixasAlbum) {
