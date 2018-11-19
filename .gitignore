@@ -2,6 +2,7 @@
 /SpotPer/build/
 /SpotPer/dist/
 /SpotPer/src/controller/Conexao.java
+
 # Arquivos do banco SQL Server
 *.mdf
 *.ldf
