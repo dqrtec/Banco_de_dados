@@ -212,7 +212,7 @@ ALTER TABLE faixa_interprete
 	ADD CONSTRAINT faixa_interprete_faixa_FK 
 		FOREIGN KEY (num_faixa, id_album)
 		REFERENCES faixa (num_faixa, id_album)
-		ON DELETE NO ACTION
+		ON DELETE CASCADE
 		ON UPDATE CASCADE;
 
 ALTER TABLE telefone_gravadora
@@ -240,7 +240,7 @@ ALTER TABLE faixa
 	ADD CONSTRAINT faixa_album_FK 
 		FOREIGN KEY (id_album)
 		REFERENCES album
-		ON DELETE NO ACTION
+		ON DELETE CASCADE
 		ON UPDATE CASCADE;
 
 ALTER TABLE faixa_playlist
@@ -254,7 +254,7 @@ ALTER TABLE faixa_playlist
 	ADD CONSTRAINT faixa_playlist_faixa_FK 	
 		FOREIGN KEY (num_faixa, id_album)
 		REFERENCES faixa (num_faixa, id_album)
-		ON DELETE NO ACTION
+		ON DELETE CASCADE
 		ON UPDATE CASCADE;
 
 ------------------| CONSULTAS |------------------
