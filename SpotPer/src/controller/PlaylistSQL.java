@@ -51,7 +51,7 @@ public class PlaylistSQL extends ExecuteSQL {
     public void adicionaFaixaPlaylist(Playlist p, Faixa f) {
         String sql = "INSERT INTO faixa_playlist "
                 + "(id_playlist, id_album, num_faixa, quantidade_tocada) "
-                + "VALUES (? ? ? ?)";
+                + "VALUES (?, ?, ?, ?)";
         
         try {
             PreparedStatement ps = getConn().prepareStatement(sql);
