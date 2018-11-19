@@ -1,4 +1,4 @@
-CREATE DATABASE BDspotPer
+CREATE DATABASE spotper
 on PRIMARY(
 		NAME = 'spotper',
 		FILENAME = 'C:\BDspotPer\spotper.mdf',
