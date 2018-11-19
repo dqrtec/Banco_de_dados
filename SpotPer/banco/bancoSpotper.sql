@@ -2,7 +2,7 @@ CREATE DATABASE spotper
 on PRIMARY(
 		NAME = 'spotper',
 		FILENAME = 'C:\BDspotPer\spotper.mdf',
-		SIZE = 1024KB,
+		SIZE = 5120KB,
 		FILEGROWTH = 1024KB
 	),
 
