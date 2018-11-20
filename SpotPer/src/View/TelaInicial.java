@@ -179,7 +179,7 @@ public class TelaInicial extends javax.swing.JFrame {
 
     private void menuAlbumMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuAlbumMouseClicked
         new MostrarAlbum().setVisible(true);
-        this.setVisible(false);
+        dispose();
     }//GEN-LAST:event_menuAlbumMouseClicked
 
     private void menuPlaylistMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuPlaylistMouseClicked

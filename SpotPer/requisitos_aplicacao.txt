@@ -1,37 +1,17 @@
-Implemente um aplicativo Java, C ou Python, que permita a inserção playlists no banco de dados. Este aplicativo deve mostrar todos os álbuns existentes. O usuário pode, assim, escolher o(s) álbum(ns) e quais faixas destes devem compor a playlist.
+==========| Implementado |==========
+
+criação de playlist
+inserção de faixa na playlist
+mostrar todas as faixas de uma playlist
 
 
-Implemente um aplicativo Java, C ou Python, com a seguinte funcionalidade: dada a descrição de álbum (ou parte dela), tornar possível a atualização de qualquer atributo do álbum.
+==========| Falta |==========
 
-DELETE and UPDATE cascade em playlist
-
-=========| FAIXA |=========
-
-Listar as faixas de um album
-Listar as faixas de um tipo de composição
-Listar as faixas de um compositor
-Listar as faixas de um interprete
-
-=========| GRAVADORA |=========
-
-Listar a gravadora de um álbum
-Listar a gravadora de uma faixa
-Listar todas as gravadoras
-
-=========| ALBUM |=========
-
-Listar os álbuns de uma gravadora
-Listar o álbum de um faixa
-Listar os álbuns de um compositor
-Listar os álbuns de um interprete
-
-=========| COMPOSITOR |=========
-
-Listar os compositores de um álbum
-Listar os compositores de uma faixa
-Listar os compositores de um período musical
-
-=========| INTERPRETE |=========
-
-Listar os interpretes de um álbum
-Listar os interpretes de uma faixa
+ajeitar as funções do menu lateral
+inserir album em uma playlist
+remover ou alterar playlist
+editar o album
+buscar playlist, album, faixa e artista
+listar as faixas de uma playlist
+listar os albuns de um artista (compositor ou interprete)
+ajeitar o layout

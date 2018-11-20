@@ -208,7 +208,7 @@ public class MostrarAlbum extends javax.swing.JFrame {
         String descricao = (String) tabelaAlbuns.getValueAt(row, 1);
 
         new MostrarFaixasAlbum(idAlbum, descricao).setVisible(true);
-        this.setVisible(false);
+        dispose();
     }//GEN-LAST:event_tabelaAlbunsMouseClicked
 
     /**

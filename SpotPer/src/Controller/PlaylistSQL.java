@@ -16,6 +16,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 /**
  * @author Tibet Teixeira
@@ -27,7 +28,7 @@ public class PlaylistSQL extends ExecuteSQL {
     }
 
     public String criarPlaylist(Playlist p) {
-        String sql = "INSERT INTO playlist VALUES (? ? ? ?)";
+        String sql = "INSERT INTO playlist VALUES (?, ?, ?, ?)";
 
         try {
             PreparedStatement ps = getConn().prepareStatement(sql);
@@ -65,11 +66,11 @@ public class PlaylistSQL extends ExecuteSQL {
                 System.out.println("Faixa adicionada com sucesso!");
                 alteraPlaylist(p, p.getTempoTotalExecucao() + f.getTempoDuracao());
             } else {
-                System.out.println("Erro ao adicionar Faixa");
+                JOptionPane.showMessageDialog(null, "Não foi possível adicionar essa faixa", "Faixa repetida", JOptionPane.ERROR_MESSAGE);
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Não foi possível adicionar essa faixa", "Faixa repetida", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -254,6 +255,30 @@ public class PlaylistSQL extends ExecuteSQL {
 
         } catch (SQLException e) {
             return e.getMessage();
+        }
+    }
+
+    public int novoIdPlaylist() {
+        String sql = "SELECT top 1 (id_playlist+1) "
+                + "FROM playlist "
+                + "ORDER BY id_playlist desc";
+
+        try {
+            PreparedStatement ps = getConn().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs != null) {
+                rs.next();
+
+                int idPlaylist = rs.getInt(1);
+
+                return idPlaylist;
+            } else {
+                return 0;
+            }
+
+        } catch (Exception e) {
+            return 0;
         }
     }
 }
