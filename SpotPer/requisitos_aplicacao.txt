@@ -10,10 +10,11 @@ mostrar todas as faixas de uma playlist
 
 ajeitar as funções do menu lateral
 remover ou alterar playlist
+remover faixa da playlist
 editar o album
 buscar playlist, album, faixa e artista
 'tocar' faixa na playlist altera a ultima vez tocada e a quantidade de vezes
-formatar as datas
+
 listar as faixas de uma playlist
 listar os albuns de um artista (compositor ou interprete)
 ajeitar o layout

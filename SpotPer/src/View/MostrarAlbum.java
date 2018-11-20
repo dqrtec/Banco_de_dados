@@ -247,7 +247,18 @@ public class MostrarAlbum extends javax.swing.JFrame {
                 }
             });
         }
-        
+
+        menuItemEditar.addActionListener(
+                new java.awt.event.ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                int row = tabelaAlbuns.getSelectedRow();
+                int codigoAlbum = (int) tabelaAlbuns.getValueAt(row, 0);
+                Album album = selecionaAlbum(codigoAlbum);
+                new EditarAlbum(album).setVisible(true);
+                dispose();
+            }
+        });
+
         menuCriarPlaylist.addActionListener(
                 new java.awt.event.ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -333,7 +344,7 @@ public class MostrarAlbum extends javax.swing.JFrame {
         }
         Conexao.fecharConexao(conn);
     }
-    
+
     private List<Playlist> listarPlaylists() {
         Connection conn = Conexao.abrirConexao();
         PlaylistSQL playlistSQL = new PlaylistSQL(conn);
@@ -342,7 +353,7 @@ public class MostrarAlbum extends javax.swing.JFrame {
 
         return lista;
     }
-    
+
     private void adicionarAlbumPlaylist(Playlist p, Album a) {
         Connection conn = Conexao.abrirConexao();
         PlaylistSQL playlistSQL = new PlaylistSQL(conn);
