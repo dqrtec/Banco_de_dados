@@ -64,7 +64,7 @@ public class PlaylistSQL extends ExecuteSQL {
 
             if (ps.executeUpdate() > 0) {
                 System.out.println("Faixa adicionada com sucesso!");
-                alteraPlaylist(p, p.getTempoTotalExecucao() + f.getTempoDuracao());
+                alteraTempoPlaylist(p, p.getTempoTotalExecucao() + f.getTempoDuracao());
             } else {
                 JOptionPane.showMessageDialog(null, "Não foi possível adicionar essa faixa", "Faixa repetida", JOptionPane.ERROR_MESSAGE);
             }
@@ -82,6 +82,7 @@ public class PlaylistSQL extends ExecuteSQL {
 
         for (Faixa f : listaFaixasAlbum) {
             adicionaFaixaPlaylist(p, f);
+//            System.out.println(f.getIdAlbum() + " " + f.getDescricao() + " " + p.getNome());;;;
         }
     }
 
@@ -198,7 +199,7 @@ public class PlaylistSQL extends ExecuteSQL {
         }
     }
 
-    public String alteraPlaylist(Playlist p, Float tempoTotalExecucao) {
+    public String alteraTempoPlaylist(Playlist p, Float tempoTotalExecucao) {
         String sql = "UPDATE playlist SET tempo_total_execucao=? "
                 + "WHERE id_playlist=?";
         try {

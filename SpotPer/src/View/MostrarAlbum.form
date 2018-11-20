@@ -143,6 +143,7 @@
                   </Properties>
                   <Events>
                     <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tabelaAlbunsMouseClicked"/>
+                    <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tabelaAlbunsMousePressed"/>
                   </Events>
                 </Component>
               </SubComponents>

@@ -6,12 +6,14 @@ mostrar todas as faixas de uma playlist
 
 
 ==========| Falta |==========
+*ajeitar bug ao inserir album, colocar o tempo total da playlist correto
 
 ajeitar as funções do menu lateral
-inserir album em uma playlist
 remover ou alterar playlist
 editar o album
 buscar playlist, album, faixa e artista
+'tocar' faixa na playlist altera a ultima vez tocada e a quantidade de vezes
+formatar as datas
 listar as faixas de uma playlist
 listar os albuns de um artista (compositor ou interprete)
 ajeitar o layout

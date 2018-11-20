@@ -7,12 +7,22 @@ package View;
 
 import Controller.AlbumSQL;
 import Controller.Conexao;
+import Controller.FaixaSQL;
+import Controller.PlaylistSQL;
 import Model.Album;
+import Model.Faixa;
+import Model.Playlist;
+import java.awt.Point;
+import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JPopupMenu;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -89,6 +99,9 @@ public class MostrarAlbum extends javax.swing.JFrame {
         tabelaAlbuns.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tabelaAlbunsMouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                tabelaAlbunsMousePressed(evt);
             }
         });
         jScrollPane1.setViewportView(tabelaAlbuns);
@@ -204,12 +217,66 @@ public class MostrarAlbum extends javax.swing.JFrame {
 
     private void tabelaAlbunsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaAlbunsMouseClicked
         int row = tabelaAlbuns.getSelectedRow();
-        int idAlbum = (int) tabelaAlbuns.getValueAt(row, 0);
-        String descricao = (String) tabelaAlbuns.getValueAt(row, 1);
+        int codigoAlbum = (int) tabelaAlbuns.getValueAt(row, 0);
 
-        new MostrarFaixasAlbum(idAlbum, descricao).setVisible(true);
-        dispose();
+        JPopupMenu jPopupMenu = new JPopupMenu();
+
+        JMenuItem menuItemTocar = new JMenuItem("Tocar");
+        JMenuItem menuItemEditar = new JMenuItem("Editar");
+        JMenu menuItemPlaylist = new JMenu("Adicionar à Playlist");
+        JMenuItem menuCriarPlaylist = new JMenuItem("Nova Playlist");
+
+        jPopupMenu.add(menuItemTocar);
+        jPopupMenu.add(menuItemEditar);
+        jPopupMenu.add(menuItemPlaylist);
+        menuItemPlaylist.add(menuCriarPlaylist);
+
+        List<Playlist> listaPlaylist = listarPlaylists();
+
+        for (Playlist playlist : listaPlaylist) {
+            JMenuItem playlistSelected = new JMenuItem(playlist.getNome());
+            menuItemPlaylist.add(playlistSelected);
+            playlistSelected.addActionListener(
+                    new java.awt.event.ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    int row = tabelaAlbuns.getSelectedRow();
+                    int codigoAlbum = (int) tabelaAlbuns.getValueAt(row, 0);
+
+                    Album album = selecionaAlbum(codigoAlbum);
+                    adicionarAlbumPlaylist(playlist, album);
+                }
+            });
+        }
+        
+        menuCriarPlaylist.addActionListener(
+                new java.awt.event.ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                new CriarPlaylist().setVisible(true);
+            }
+        });
+
+        tabelaAlbuns.addMouseListener(
+                new java.awt.event.MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                if (e.getButton() == MouseEvent.BUTTON3) {
+                    jPopupMenu.show(tabelaAlbuns, e.getX(), e.getY());
+                }
+            }
+        });
+
     }//GEN-LAST:event_tabelaAlbunsMouseClicked
+
+    private void tabelaAlbunsMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaAlbunsMousePressed
+        Point point = evt.getPoint();
+        if (evt.getClickCount() == 2 && tabelaAlbuns.getSelectedRow() != -1) {
+            int row = tabelaAlbuns.getSelectedRow();
+            int idAlbum = (int) tabelaAlbuns.getValueAt(row, 0);
+            String descricao = (String) tabelaAlbuns.getValueAt(row, 1);
+
+            new MostrarFaixasAlbum(idAlbum, descricao).setVisible(true);
+            dispose();
+        }
+    }//GEN-LAST:event_tabelaAlbunsMousePressed
 
     /**
      * @param args the command line arguments
@@ -265,6 +332,31 @@ public class MostrarAlbum extends javax.swing.JFrame {
             i++;
         }
         Conexao.fecharConexao(conn);
+    }
+    
+    private List<Playlist> listarPlaylists() {
+        Connection conn = Conexao.abrirConexao();
+        PlaylistSQL playlistSQL = new PlaylistSQL(conn);
+        List<Playlist> lista = playlistSQL.listarPlaylist();
+        Conexao.fecharConexao(conn);
+
+        return lista;
+    }
+    
+    private void adicionarAlbumPlaylist(Playlist p, Album a) {
+        Connection conn = Conexao.abrirConexao();
+        PlaylistSQL playlistSQL = new PlaylistSQL(conn);
+        playlistSQL.adicionaAlbumPlaylist(p, a);
+        Conexao.fecharConexao(conn);
+    }
+
+    private Album selecionaAlbum(int idAlbum) {
+        Connection conn = Conexao.abrirConexao();
+        AlbumSQL albumSQL = new AlbumSQL(conn);
+        Album album = albumSQL.listaAlbum(idAlbum);
+        Conexao.fecharConexao(conn);
+
+        return album;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

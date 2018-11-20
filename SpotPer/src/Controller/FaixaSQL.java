@@ -114,7 +114,7 @@ public class FaixaSQL extends ExecuteSQL {
     }
 
     public List<Faixa> listarFaixasAlbum(Album a) {
-        String sql = "f.num_faixa, f.id_album, f.descricao, f.tempo_duracao, f.tipo_gravacao, f.id_tipo_composicao, tc.descricao "
+        String sql = "SELECT f.num_faixa, f.id_album, f.descricao, f.tempo_duracao, f.tipo_gravacao, f.id_tipo_composicao, tc.descricao "
                 + "FROM faixa f "
                 + "INNER JOIN tipo_composicao tc ON (f.id_tipo_composicao = tc.id_tipo_composicao) "
                 + "WHERE f.id_album = " + a.getIdAlbum();
