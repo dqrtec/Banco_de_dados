@@ -184,14 +184,14 @@ ALTER TABLE faixa_compositor
 	ADD CONSTRAINT faixa_compositor_comp_FK 
 		FOREIGN KEY (id_compositor)
 		REFERENCES compositor
-		ON DELETE NO ACTION
+		ON DELETE CASCADE
 		ON UPDATE CASCADE;
 
 ALTER TABLE faixa_compositor
 	ADD CONSTRAINT faixa_compositor_faixa_FK 
 		FOREIGN KEY (num_faixa, id_album)
 		REFERENCES faixa (num_faixa, id_album)
-		ON DELETE NO ACTION
+		ON DELETE CASCADE
 		ON UPDATE CASCADE;
 
 ALTER TABLE interprete
@@ -205,7 +205,7 @@ ALTER TABLE faixa_interprete
 	ADD CONSTRAINT faixa_interprete_inter_FK 
 		FOREIGN KEY (id_interprete)
 		REFERENCES interprete
-		ON DELETE NO ACTION
+		ON DELETE CASCADE
 		ON UPDATE CASCADE;
 
 ALTER TABLE faixa_interprete	
@@ -219,14 +219,14 @@ ALTER TABLE telefone_gravadora
 	ADD CONSTRAINT tel_gravadora_FK 
 		FOREIGN KEY (cod_gravadora)
 		REFERENCES gravadora
-		ON DELETE NO ACTION
+		ON DELETE CASCADE
 		ON UPDATE CASCADE;
 
 ALTER TABLE album
 	ADD CONSTRAINT album_gravadora_FK 
 		FOREIGN KEY (cod_gravadora)
 		REFERENCES gravadora
-		ON DELETE NO ACTION
+		ON DELETE CASCADE
 		ON UPDATE CASCADE;
 
 ALTER TABLE faixa
@@ -256,7 +256,7 @@ ALTER TABLE faixa_playlist
 		REFERENCES faixa (num_faixa, id_album)
 		ON DELETE CASCADE
 		ON UPDATE CASCADE;
-
+		
 ------------------| CONSULTAS |------------------
 
 CREATE VIEW playlist_qtd_album(nome,qtd)
