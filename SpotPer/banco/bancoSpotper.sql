@@ -34,6 +34,9 @@ on PRIMARY(
 	)
 GO
 
+USE spotper
+GO
+
 ------------------| TABELAS |------------------
 
 CREATE TABLE periodo_musical(
