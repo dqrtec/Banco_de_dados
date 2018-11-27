@@ -132,6 +132,24 @@ CREATE TABLE playlist(
 	tempo_total_execucao DECIMAL(10,2)
 )on spot_fg02;
 
+------------------| INDICES |------------------
+
+CREATE clustered INDEX indice_faixa_by_album_id 
+ON dbo.faixa(
+		id_album ASC
+) WITH 
+(PAD_INDEX = On,
+ FILLFACTOR = 100)
+GO
+
+CREATE NONCLUSTERED INDEX indice_sec_tipo_composi ON dbo.faixa
+	(
+		id_tipo_composicao ASC
+	)WITH 
+(PAD_INDEX = On,
+ FILLFACTOR = 100)
+GO
+
 ------------------| CHAVES PRIMÁRIAS |------------------
 
 ALTER TABLE periodo_musical
