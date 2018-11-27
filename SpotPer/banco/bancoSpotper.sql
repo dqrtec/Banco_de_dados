@@ -303,10 +303,10 @@ GO
 
 ------------------| MATERIALIZED VIEW |------------------
 
-CREATE VIEW playlist_qtd_album(nome,qtd)
+CREATE VIEW playlist_qtd_album(id_playlist,nome,qtd)
 With SchemaBinding
 AS
-	SELECT p.nome , count_big(f.id_album) as 'Quantidade Album'
+	SELECT p.id_playlist, p.nome , count_big(*) as qtd
 	FROM dbo.playlist p, dbo.faixa_playlist fp,dbo.faixa f
 	WHERE 
 		p.id_playlist = fp.id_playlist AND
@@ -316,5 +316,5 @@ AS
 GO
 
 CREATE UNIQUE CLUSTERED INDEX indx_play_qtd_faixa
-  ON playlist_qtd_album(nome)
+  ON playlist_qtd_album(id_playlist,nome)
 GO
