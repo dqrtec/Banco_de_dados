@@ -13,6 +13,15 @@ public class Faixa {
     String descricao;
     String tipoGravacao;
     String descricaoComposicao;
+    String diretorio;
+
+    public String getDiretorio() {
+        return diretorio;
+    }
+
+    public void setDiretorio(String diretorio) {
+        this.diretorio = diretorio;
+    }
 
     public String getDescricaoComposicao() {
         return descricaoComposicao;

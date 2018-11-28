@@ -47,7 +47,7 @@ public class FaixaSQL extends ExecuteSQL {
     }
 
     public Faixa listaFaixa(int idAlbum, int numFaixa) {
-        String sql = "SELECT f.num_faixa, f.id_album, f.descricao, f.tempo_duracao, f.tipo_gravacao, f.id_tipo_composicao, tc.descricao "
+        String sql = "SELECT f.num_faixa, f.id_album, f.descricao, f.tempo_duracao, f.tipo_gravacao, f.id_tipo_composicao, tc.descricao, f.diretorio "
                 + "FROM faixa f "
                 + "INNER JOIN tipo_composicao tc ON (f.id_tipo_composicao = tc.id_tipo_composicao)"
                 + "WHERE f.num_faixa = " + numFaixa + " and f.id_album = " + idAlbum;
@@ -67,6 +67,7 @@ public class FaixaSQL extends ExecuteSQL {
                 faixa.setTipoGravacao(rs.getString(5));
                 faixa.setIdComposicao(rs.getInt(6));
                 faixa.setDescricaoComposicao(rs.getString(7));
+                faixa.setDiretorio(rs.getString(8));
 
                 return faixa;
             } else {

@@ -241,7 +241,7 @@ public class MostrarAlbum extends javax.swing.JFrame {
                 public void actionPerformed(ActionEvent e) {
                     int row = tabelaAlbuns.getSelectedRow();
                     int codigoAlbum = (int) tabelaAlbuns.getValueAt(row, 0);
-
+                    
                     Album album = selecionaAlbum(codigoAlbum);
                     adicionarAlbumPlaylist(playlist, album);
                 }

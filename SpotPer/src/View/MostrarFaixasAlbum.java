@@ -6,6 +6,7 @@
 package View;
 
 import Controller.Conexao;
+import Controller.FaixaController;
 import Controller.FaixaSQL;
 import Controller.PlaylistSQL;
 import Model.Faixa;
@@ -18,6 +19,7 @@ import java.awt.event.MouseEvent;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
+import javax.sound.sampled.Clip;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
@@ -31,10 +33,12 @@ import javax.swing.table.DefaultTableModel;
 public class MostrarFaixasAlbum extends javax.swing.JFrame {
 
     private int idAlbum;
+    private Clip clip;
 
     public MostrarFaixasAlbum(int idAlbum, String descricao) {
         initComponents();
         this.idAlbum = idAlbum;
+        this.clip = null;
         labelTitulo.setText(descricao);
         atualizaTabelaFaixas();
     }
@@ -242,7 +246,9 @@ public class MostrarFaixasAlbum extends javax.swing.JFrame {
             public void actionPerformed(ActionEvent e) {
                 int row = tabelaFaixas.getSelectedRow();
                 int numFaixa = (int) tabelaFaixas.getValueAt(row, 0);
-                System.out.println("Número da faixa 1 - " + numFaixa);
+                Faixa faixa = selecionaFaixa(numFaixa);
+                if (clip != null) clip.stop();
+                clip = new FaixaController().tocarFaixa(faixa);
             }
         });
 
@@ -254,7 +260,7 @@ public class MostrarFaixasAlbum extends javax.swing.JFrame {
                 System.out.println("Número da faixa 1 - " + numFaixa);
             }
         });
-        
+
         menuCriarPlaylist.addActionListener(
                 new java.awt.event.ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -302,7 +308,7 @@ public class MostrarFaixasAlbum extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                //new MostrarFaixasAlbum().setVisible(true);
+                new MostrarFaixasAlbum(111, "Album 1").setVisible(true);
             }
         });
     }
