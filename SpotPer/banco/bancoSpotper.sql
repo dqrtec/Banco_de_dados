@@ -281,7 +281,7 @@ ALTER TABLE faixa_playlist
 ------------------| CONSULTAS |------------------
 
 -- 9 a)
-select album_id
+select album.id_album
 from album
 where preco_compra > 
 	(
