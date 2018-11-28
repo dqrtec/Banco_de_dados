@@ -280,6 +280,26 @@ ALTER TABLE faixa_playlist
 		
 ------------------| CONSULTAS |------------------
 
+-- 9 a)
+select album_id
+from album
+where preco_compra > 
+	(
+		select avg(preco_compra) from album
+)
+GO
+
+-- 9 b)
+-- 9 c)
+select top 1 c.nome, count(*) from compositor c, compositor_faixa cf, faixa_playlist fp
+where 
+	c.id_compositor = cf.id_compositor and
+	cf.num_faixa = fp.num_faixa and
+	cf.id_album = fp.id_album and
+group by c.id_compositor, c.nome
+GO
+-- 9 d)
+
 ------------------| TRIGGERS |------------------
 
 create trigger limite64FaixaPorAlbum
