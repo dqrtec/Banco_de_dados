@@ -14,6 +14,7 @@ import java.sql.Connection;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /**
@@ -21,12 +22,13 @@ import javax.swing.JOptionPane;
  * @author Tibet Teixeira
  */
 public class CriarPlaylist extends javax.swing.JFrame {
-
+    private JFrame frame;
     /**
      * Creates new form CriarPlaylist
      */
-    public CriarPlaylist() {
+    public CriarPlaylist(JFrame frame) {
         initComponents();
+        this.frame = frame;
     }
 
     /**
@@ -44,6 +46,7 @@ public class CriarPlaylist extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         txtNomePlaylist = new javax.swing.JTextField();
         btnCriarPlaylist = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
         menuMusica = new javax.swing.JLabel();
         menuArtista = new javax.swing.JLabel();
         menuAlbum = new javax.swing.JLabel();
@@ -69,25 +72,33 @@ public class CriarPlaylist extends javax.swing.JFrame {
             }
         });
 
+        btnCancelar.setText("Cancelar");
+        btnCancelar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnCancelarMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(65, 65, 65)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(369, 369, 369)
-                        .addComponent(btnCriarPlaylist))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(65, 65, 65)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtNomePlaylist, javax.swing.GroupLayout.PREFERRED_SIZE, 697, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtNomePlaylist, javax.swing.GroupLayout.PREFERRED_SIZE, 697, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(70, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(labelTitulo)
                 .addGap(309, 309, 309))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnCriarPlaylist, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(308, 308, 308))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -98,9 +109,11 @@ public class CriarPlaylist extends javax.swing.JFrame {
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtNomePlaylist, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(96, 96, 96)
-                .addComponent(btnCriarPlaylist, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(105, 105, 105))
+                .addGap(93, 93, 93)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnCancelar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnCriarPlaylist, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE))
+                .addGap(108, 108, 108))
         );
 
         menuMusica.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -178,6 +191,7 @@ public class CriarPlaylist extends javax.swing.JFrame {
 
     private void btnCriarPlaylistMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCriarPlaylistMouseClicked
         criarPlaylist();
+        dispose();
     }//GEN-LAST:event_btnCriarPlaylistMouseClicked
 
     private void jTextBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextBuscarActionPerformed
@@ -187,6 +201,11 @@ public class CriarPlaylist extends javax.swing.JFrame {
     private void jTextBuscarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextBuscarKeyPressed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextBuscarKeyPressed
+
+    private void btnCancelarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarMouseClicked
+        frame.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_btnCancelarMouseClicked
 
     /**
      * @param args the command line arguments
@@ -218,7 +237,7 @@ public class CriarPlaylist extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new CriarPlaylist().setVisible(true);
+                //new CriarPlaylist().setVisible(true);
             }
         });
     }
@@ -243,7 +262,6 @@ public class CriarPlaylist extends javax.swing.JFrame {
             playlistSQL.criarPlaylist(p);
 
             Conexao.fecharConexao(conn);
-            dispose();
         }
         else {
             JOptionPane.showMessageDialog(null, "Você precisa dar um nome à sua playlist", "Erro!", JOptionPane.ERROR_MESSAGE);
@@ -251,6 +269,7 @@ public class CriarPlaylist extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnCriarPlaylist;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;

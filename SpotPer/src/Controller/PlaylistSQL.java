@@ -219,12 +219,12 @@ public class PlaylistSQL extends ExecuteSQL {
         }
     }
 
-    public String removerPlaylist(Playlist p) {
+    public String removerPlaylist(int idPlaylist) {
         String sql = "DELETE FROM playlist WHERE id_playlist = ?";
 
         try {
             PreparedStatement ps = getConn().prepareStatement(sql);
-            ps.setInt(1, p.getIdPlaylist());
+            ps.setInt(1, idPlaylist);
 
             if (ps.executeUpdate() > 0) {
                 return "Playlist removida com sucesso!";

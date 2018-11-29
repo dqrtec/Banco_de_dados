@@ -20,6 +20,7 @@ import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 import javax.sound.sampled.Clip;
+import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
@@ -211,7 +212,8 @@ public class MostrarFaixasAlbum extends javax.swing.JFrame {
     private void tabelaFaixasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaFaixasMouseClicked
         int row = tabelaFaixas.getSelectedRow();
         int numFaixa = (int) tabelaFaixas.getValueAt(row, 0);
-
+        JFrame aqui = this;
+        
         JPopupMenu jPopupMenu = new JPopupMenu();
 
         JMenuItem menuItemTocar = new JMenuItem("Tocar");
@@ -264,7 +266,7 @@ public class MostrarFaixasAlbum extends javax.swing.JFrame {
         menuCriarPlaylist.addActionListener(
                 new java.awt.event.ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                new CriarPlaylist().setVisible(true);
+                new CriarPlaylist(aqui).setVisible(true);
             }
         });
 

@@ -20,6 +20,7 @@ import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 import javax.sound.sampled.Clip;
+import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
@@ -128,7 +129,8 @@ public class MostrarFaixas extends javax.swing.JFrame {
                 .addGap(40, 40, 40)
                 .addComponent(labelTitulo)
                 .addGap(17, 17, 17)
-                .addComponent(jScrollPane1))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         menuMusica.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -188,7 +190,7 @@ public class MostrarFaixas extends javax.swing.JFrame {
                 .addComponent(menuAlbum)
                 .addGap(18, 18, 18)
                 .addComponent(menuPlaylist)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(271, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -220,7 +222,8 @@ public class MostrarFaixas extends javax.swing.JFrame {
     private void tabelaFaixasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaFaixasMouseClicked
         int row = tabelaFaixas.getSelectedRow();
         String codigo = (String) tabelaFaixas.getValueAt(row, 0);
-
+        JFrame aqui = this;
+        
         int numFaixa = parseInt(codigo.split(" - ")[0]);
         int idAlbum = parseInt(codigo.split(" - ")[1]);
 
@@ -276,7 +279,7 @@ public class MostrarFaixas extends javax.swing.JFrame {
         menuCriarPlaylist.addActionListener(
                 new java.awt.event.ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                new CriarPlaylist().setVisible(true);
+                new CriarPlaylist(aqui).setVisible(true);
             }
         });
 

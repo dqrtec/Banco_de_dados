@@ -19,6 +19,7 @@ import java.awt.event.MouseEvent;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
@@ -218,6 +219,7 @@ public class MostrarAlbum extends javax.swing.JFrame {
     private void tabelaAlbunsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaAlbunsMouseClicked
         int row = tabelaAlbuns.getSelectedRow();
         int codigoAlbum = (int) tabelaAlbuns.getValueAt(row, 0);
+        JFrame aqui = this;
 
         JPopupMenu jPopupMenu = new JPopupMenu();
 
@@ -262,7 +264,8 @@ public class MostrarAlbum extends javax.swing.JFrame {
         menuCriarPlaylist.addActionListener(
                 new java.awt.event.ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                new CriarPlaylist().setVisible(true);
+                new CriarPlaylist(aqui).setVisible(true);
+                dispose();
             }
         });
 

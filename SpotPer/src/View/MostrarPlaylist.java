@@ -5,27 +5,33 @@
  */
 package View;
 
-import Model.Faixa;
 import Controller.Conexao;
 import Controller.FaixaSQL;
-
-import java.awt.event.KeyEvent;
+import Controller.PlaylistSQL;
+import Model.Faixa;
+import Model.Playlist;
+import java.awt.event.ActionEvent;
+import java.awt.event.MouseEvent;
 import java.sql.Connection;
-import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JPopupMenu;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author Tibet Teixeira
+ * @author tibet
  */
-public class TelaInicial extends javax.swing.JFrame {
+public class MostrarPlaylist extends javax.swing.JFrame {
 
     /**
-     * Creates new form TelaInicial
+     * Creates new form MostrarPlaylist
      */
-    public TelaInicial() {
+    public MostrarPlaylist() {
         initComponents();
+        atualizaTabelaPlaylist();
     }
 
     /**
@@ -38,8 +44,10 @@ public class TelaInicial extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jPanel3 = new javax.swing.JPanel();
+        jPanel2 = new javax.swing.JPanel();
         labelTitulo = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tabelaPlaylists = new javax.swing.JTable();
         menuMusica = new javax.swing.JLabel();
         menuArtista = new javax.swing.JLabel();
         menuAlbum = new javax.swing.JLabel();
@@ -51,63 +59,83 @@ public class TelaInicial extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(40, 40, 40));
 
-        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel2.setPreferredSize(new java.awt.Dimension(832, 37));
 
         labelTitulo.setFont(new java.awt.Font("Old English Text MT", 0, 36)); // NOI18N
-        labelTitulo.setText("Spotper");
+        labelTitulo.setText("Playlists");
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
+        tabelaPlaylists.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "#", "Nome", "Data de criação", "Tempo total de execução"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Float.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tabelaPlaylists.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabelaPlaylistsMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tabelaPlaylists);
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(369, 369, 369)
                 .addComponent(labelTitulo)
-                .addContainerGap(347, Short.MAX_VALUE))
+                .addContainerGap(329, Short.MAX_VALUE))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1)
+                .addContainerGap())
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(40, 40, 40)
                 .addComponent(labelTitulo)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(29, 29, 29)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         menuMusica.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         menuMusica.setForeground(new java.awt.Color(204, 204, 204));
         menuMusica.setText("Músicas");
-        menuMusica.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                menuMusicaMouseClicked(evt);
-            }
-        });
 
         menuArtista.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         menuArtista.setForeground(new java.awt.Color(204, 204, 204));
         menuArtista.setText("Artistas");
-        menuArtista.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                menuArtistaMouseClicked(evt);
-            }
-        });
 
         menuAlbum.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         menuAlbum.setForeground(new java.awt.Color(204, 204, 204));
         menuAlbum.setText("Álbuns");
-        menuAlbum.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                menuAlbumMouseClicked(evt);
-            }
-        });
 
         menuPlaylist.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         menuPlaylist.setForeground(new java.awt.Color(204, 204, 204));
         menuPlaylist.setText("Playlists");
-        menuPlaylist.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                menuPlaylistMouseClicked(evt);
-            }
-        });
 
         jTextBuscar.setText("Buscar...");
         jTextBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -130,29 +158,25 @@ public class TelaInicial extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(16, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(21, 21, 21)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextBuscar)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(menuMusica)
-                                    .addComponent(menuArtista)
-                                    .addComponent(menuAlbum)
-                                    .addComponent(menuPlaylist))
-                                .addGap(0, 0, Short.MAX_VALUE)))
+                            .addComponent(menuMusica)
+                            .addComponent(menuArtista)
+                            .addComponent(menuAlbum)
+                            .addComponent(menuPlaylist)
+                            .addComponent(jTextBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(labelNovaPlaylist, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 520, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(41, 41, 41)
                 .addComponent(jTextBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -183,31 +207,48 @@ public class TelaInicial extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void menuMusicaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuMusicaMouseClicked
-        new MostrarFaixas().setVisible(true);
-        dispose();
-    }//GEN-LAST:event_menuMusicaMouseClicked
-
-    private void menuArtistaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuArtistaMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_menuArtistaMouseClicked
-
-    private void menuAlbumMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuAlbumMouseClicked
-        new MostrarAlbum().setVisible(true);
-        dispose();
-    }//GEN-LAST:event_menuAlbumMouseClicked
-
-    private void menuPlaylistMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuPlaylistMouseClicked
-        new MostrarPlaylist().setVisible(true);
-        dispose();
-    }//GEN-LAST:event_menuPlaylistMouseClicked
+    private void tabelaPlaylistsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaPlaylistsMouseClicked
+        int row = tabelaPlaylists.getSelectedRow();
+        int idPlaylist = (int) tabelaPlaylists.getValueAt(row, 0);
+        
+        JPopupMenu jPopupMenu = new JPopupMenu();
+        
+        JMenuItem menuItemEditar = new JMenuItem("Editar");
+        JMenuItem menuItemRemover = new JMenuItem("Remover");
+        
+        jPopupMenu.add(menuItemEditar);
+        jPopupMenu.add(menuItemRemover);
+        
+        menuItemEditar.addActionListener(
+                new java.awt.event.ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                
+            }
+        });
+        
+        menuItemRemover.addActionListener(
+                new java.awt.event.ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                int dialogResult = JOptionPane.showConfirmDialog(null, "Deseja realmente excluir?",
+                        "Atenção!", JOptionPane.YES_NO_OPTION);
+                if (dialogResult == JOptionPane.YES_OPTION) {
+                    removerPlaylist(idPlaylist);
+                }
+            }
+        });
+        
+        tabelaPlaylists.addMouseListener(
+                new java.awt.event.MouseAdapter() {
+            public void mouseClicked(MouseEvent e) {
+                if (e.getButton() == MouseEvent.BUTTON3) {
+                    jPopupMenu.show(tabelaPlaylists, e.getX(), e.getY());
+                }
+            }
+        });
+    }//GEN-LAST:event_tabelaPlaylistsMouseClicked
 
     private void jTextBuscarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextBuscarKeyPressed
-
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            String strTexto = jTextBuscar.getText();
-            JOptionPane.showMessageDialog(null, strTexto);
-        }
+        // TODO add your handling code here:
     }//GEN-LAST:event_jTextBuscarKeyPressed
 
     private void labelNovaPlaylistMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelNovaPlaylistMouseClicked
@@ -232,28 +273,56 @@ public class TelaInicial extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TelaInicial.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MostrarPlaylist.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TelaInicial.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MostrarPlaylist.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TelaInicial.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MostrarPlaylist.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TelaInicial.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MostrarPlaylist.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-
-                new TelaInicial().setVisible(true);
+                new MostrarPlaylist().setVisible(true);
             }
         });
+    }
+    
+    private void atualizaTabelaPlaylist() {
+        Connection conn = Conexao.abrirConexao();
+        PlaylistSQL playlistSQL = new PlaylistSQL(conn);
+        List<Playlist> lista = playlistSQL.listarPlaylist();
+        DefaultTableModel tbm = (DefaultTableModel) tabelaPlaylists.getModel();
+        while (tbm.getRowCount() > 0) {
+            tbm.removeRow(0);
+        }
+        int i = 0;
+        for (Playlist tab : lista) {
+            tbm.addRow(new String[i]);
+            tabelaPlaylists.setValueAt(tab.getIdPlaylist(), i, 0);
+            tabelaPlaylists.setValueAt(tab.getNome(), i, 1);
+            tabelaPlaylists.setValueAt(tab.getDataCriacao(), i, 2);
+            tabelaPlaylists.setValueAt(tab.getTempoTotalExecucao(), i, 3);
+            i++;
+        }
+        Conexao.fecharConexao(conn);
+    }
+    
+    private void removerPlaylist(int idPlaylist) {
+        Connection conn = Conexao.abrirConexao();
+        PlaylistSQL playlistSQL = new PlaylistSQL(conn);
+        String message = playlistSQL.removerPlaylist(idPlaylist);
+        Conexao.fecharConexao(conn);
+        JOptionPane.showMessageDialog(null, message);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextBuscar;
     private javax.swing.JLabel labelNovaPlaylist;
     private javax.swing.JLabel labelTitulo;
@@ -261,5 +330,6 @@ public class TelaInicial extends javax.swing.JFrame {
     private javax.swing.JLabel menuArtista;
     private javax.swing.JLabel menuMusica;
     private javax.swing.JLabel menuPlaylist;
+    private javax.swing.JTable tabelaPlaylists;
     // End of variables declaration//GEN-END:variables
 }
