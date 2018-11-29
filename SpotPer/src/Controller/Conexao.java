@@ -21,7 +21,8 @@ public class Conexao {
         try {
             String userName = "sa";
             String password = "brasil158";            
-            String url = "jdbc:sqlserver://DESKTOP-MN99E0G;databaseName=BDspotPer";
+            //String url = "jdbc:sqlserver://DESKTOP-MN99E0G;databaseName=BDspotPer";
+            String url = "jdbc:sqlserver://ZOSO-WIN\\SQLSERVER;databaseName=spotper";
             
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             conn = DriverManager.getConnection(url, userName, password);

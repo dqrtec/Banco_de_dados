@@ -309,8 +309,8 @@ public class EditarAlbum extends javax.swing.JFrame {
 
     private void btnEditarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditarMouseClicked
         editarAlbum();
-        dispose();
         new MostrarAlbum().setVisible(true);
+        dispose();
     }//GEN-LAST:event_btnEditarMouseClicked
 
     /**

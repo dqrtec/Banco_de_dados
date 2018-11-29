@@ -20,7 +20,12 @@ public class FaixaSQL extends ExecuteSQL {
     }
 
     public List<Faixa> listarFaixas() {
-        String sql = "SELECT num_faixa, id_album FROM faixa";
+        String sql = "SELECT TOP(20) f.num_faixa, f.id_album, f.descricao, f.tempo_duracao, a.descricao, c.nome "
+                + "FROM faixa f "
+                + "INNER JOIN album a ON (f.id_album = a.id_album) "
+                + "INNER JOIN faixa_compositor fc ON (f.num_faixa = fc.num_faixa and f.id_album = fc.id_album) "
+                + "INNER JOIN compositor c ON (c.id_compositor = fc.id_compositor) "
+                + "ORDER BY id_album DESC";
 
         List<Faixa> listaFaixa = new ArrayList();
         try {
@@ -33,6 +38,10 @@ public class FaixaSQL extends ExecuteSQL {
 
                     f.setNumFaixa(rs.getInt(1));
                     f.setIdAlbum(rs.getInt(2));
+                    f.setDescricao(rs.getString(3));
+                    f.setTempoDuracao(rs.getFloat(4));
+                    f.setDescricaoAlbum(rs.getString(5));
+                    f.setNomeCompositor(rs.getString(6));
 
                     listaFaixa.add(f);
                 }

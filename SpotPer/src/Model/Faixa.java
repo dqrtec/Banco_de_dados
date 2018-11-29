@@ -14,6 +14,24 @@ public class Faixa {
     String tipoGravacao;
     String descricaoComposicao;
     String diretorio;
+    String nomeCompositor;
+    String descricaoAlbum;
+
+    public String getDescricaoAlbum() {
+        return descricaoAlbum;
+    }
+
+    public void setDescricaoAlbum(String descricaoAlbum) {
+        this.descricaoAlbum = descricaoAlbum;
+    }
+
+    public String getNomeCompositor() {
+        return nomeCompositor;
+    }
+
+    public void setNomeCompositor(String nomeCompositor) {
+        this.nomeCompositor = nomeCompositor;
+    }
 
     public String getDiretorio() {
         return diretorio;

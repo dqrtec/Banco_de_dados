@@ -171,7 +171,8 @@ public class TelaInicial extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void menuMusicaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuMusicaMouseClicked
-        pesquisaFaixa();
+        new MostrarFaixas().setVisible(true);
+        dispose();
     }//GEN-LAST:event_menuMusicaMouseClicked
 
     private void menuArtistaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuArtistaMouseClicked
@@ -199,18 +200,6 @@ public class TelaInicial extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jTextBuscarKeyPressed
 
-    public void pesquisaFaixa() {
-        Connection conn = Conexao.abrirConexao();
-        FaixaSQL fsql = new FaixaSQL(conn);
-        List<Faixa> listaFaixa = new ArrayList();
-        listaFaixa = fsql.listarFaixas();
-        String faixas;
-        for (Faixa fx : listaFaixa) {
-            faixas = "Número: " + fx.getNumFaixa() + " Álbum: " + fx.getIdAlbum();
-            JOptionPane.showMessageDialog(null, faixas);
-        }
-        Conexao.fecharConexao(conn);
-    }
 
     /**
      * @param args the command line arguments
