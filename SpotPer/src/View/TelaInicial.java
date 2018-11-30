@@ -242,6 +242,7 @@ public class TelaInicial extends javax.swing.JFrame {
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             String strTexto = jTextBuscar.getText();
             new MostrarResultado(strTexto).setVisible(true);
+            dispose();
         }
     }//GEN-LAST:event_jTextBuscarKeyPressed
 
