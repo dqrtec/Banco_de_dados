@@ -187,4 +187,38 @@ public class FaixaSQL extends ExecuteSQL {
         }
     }
 
+    public List<Faixa> listarFaixasPlaylist(int idPlaylist) {
+        String sql = "SELECT  f.num_faixa, f.id_album, f.descricao, a.descricao, f.tempo_duracao "
+                + "FROM faixa f "
+                + "INNER JOIN album a ON (f.id_album = a.id_album) "
+                + "INNER JOIN faixa_playlist fp ON (fp.num_faixa = f.num_faixa and fp.id_album = f.id_album) "
+                + "WHERE fp.id_playlist = " + idPlaylist;
+
+        List<Faixa> listaFaixa = new ArrayList();
+        try {
+            PreparedStatement ps = getConn().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs != null) {
+                while (rs.next()) {
+                    Faixa faixa = new Faixa();
+
+                    faixa.setNumFaixa(rs.getInt(1));
+                    faixa.setIdAlbum(rs.getInt(2));
+                    faixa.setDescricao(rs.getString(3));
+                    faixa.setDescricaoAlbum(rs.getString(4));
+                    faixa.setTempoDuracao(rs.getFloat(5));
+
+                    listaFaixa.add(faixa);
+                }
+                return listaFaixa;
+            } else {
+                return null;
+            }
+
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
 }

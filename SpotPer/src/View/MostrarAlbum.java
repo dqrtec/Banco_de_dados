@@ -240,10 +240,7 @@ public class MostrarAlbum extends javax.swing.JFrame {
             menuItemPlaylist.add(playlistSelected);
             playlistSelected.addActionListener(
                     new java.awt.event.ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    int row = tabelaAlbuns.getSelectedRow();
-                    int codigoAlbum = (int) tabelaAlbuns.getValueAt(row, 0);
-                    
+                public void actionPerformed(ActionEvent e) {        
                     Album album = selecionaAlbum(codigoAlbum);
                     adicionarAlbumPlaylist(playlist, album);
                 }
@@ -253,8 +250,6 @@ public class MostrarAlbum extends javax.swing.JFrame {
         menuItemEditar.addActionListener(
                 new java.awt.event.ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                int row = tabelaAlbuns.getSelectedRow();
-                int codigoAlbum = (int) tabelaAlbuns.getValueAt(row, 0);
                 Album album = selecionaAlbum(codigoAlbum);
                 new EditarAlbum(album).setVisible(true);
                 dispose();

@@ -266,14 +266,14 @@ public class PlaylistSQL extends ExecuteSQL {
         }
     }
 
-    public String removerFaixaPlaylist(Playlist p, Faixa f) {
+    public String removerFaixaPlaylist(int idPlaylist, Faixa f) {
         String sql = "DELETE FROM faixa_playlist "
                 + "WHERE id_playlist = ? and id_album = ? and num_faixa = ?";
 
         try {
             PreparedStatement ps = getConn().prepareStatement(sql);
 
-            ps.setInt(1, p.getIdPlaylist());
+            ps.setInt(1, idPlaylist);
             ps.setInt(2, f.getIdAlbum());
             ps.setInt(3, f.getNumFaixa());
 

@@ -147,12 +147,13 @@
                         <Column editable="false" title="#" type="java.lang.Integer"/>
                         <Column editable="false" title="Nome" type="java.lang.String"/>
                         <Column editable="false" title="Data de cria&#xe7;&#xe3;o" type="java.lang.String"/>
-                        <Column editable="false" title="Tempo total de execu&#xe7;&#xe3;o" type="java.lang.Float"/>
+                        <Column editable="false" title="Tempo total de execu&#xe7;&#xe3;o" type="java.lang.String"/>
                       </Table>
                     </Property>
                   </Properties>
                   <Events>
                     <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tabelaPlaylistsMouseClicked"/>
+                    <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tabelaPlaylistsMousePressed"/>
                   </Events>
                 </Component>
               </SubComponents>

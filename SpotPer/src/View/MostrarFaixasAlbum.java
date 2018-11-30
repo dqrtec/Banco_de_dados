@@ -234,9 +234,6 @@ public class MostrarFaixasAlbum extends javax.swing.JFrame {
             playlistSelected.addActionListener(
                     new java.awt.event.ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    int row = tabelaFaixas.getSelectedRow();
-                    int numFaixa = (int) tabelaFaixas.getValueAt(row, 0);
-
                     Faixa faixa = selecionaFaixa(numFaixa);
                     adicionarFaixaPlaylist(playlist, faixa);
                 }
@@ -246,8 +243,6 @@ public class MostrarFaixasAlbum extends javax.swing.JFrame {
         menuItemTocar.addActionListener(
                 new java.awt.event.ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                int row = tabelaFaixas.getSelectedRow();
-                int numFaixa = (int) tabelaFaixas.getValueAt(row, 0);
                 Faixa faixa = selecionaFaixa(numFaixa);
                 if (clip != null) clip.stop();
                 clip = new FaixaController().tocarFaixa(faixa);
@@ -329,7 +324,10 @@ public class MostrarFaixasAlbum extends javax.swing.JFrame {
             tbm.addRow(new String[i]);
             tabelaFaixas.setValueAt(tab.getNumFaixa(), i, 0);
             tabelaFaixas.setValueAt(tab.getDescricao(), i, 1);
-            tabelaFaixas.setValueAt(tab.getTempoDuracao(), i, 2);
+            float time = tab.getTempoDuracao();
+            int minute = (int) time;
+            float second = ((time - minute) * 100);
+            tabelaFaixas.setValueAt(String.format("%s:%.0f", minute, second), i, 2);
             tabelaFaixas.setValueAt(tab.getTipoGravacao(), i, 3);
             tabelaFaixas.setValueAt(tab.getDescricaoComposicao(), i, 4);
             i++;

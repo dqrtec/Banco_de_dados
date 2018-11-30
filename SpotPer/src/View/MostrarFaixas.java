@@ -84,7 +84,7 @@ public class MostrarFaixas extends javax.swing.JFrame {
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Float.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false, false
@@ -98,6 +98,7 @@ public class MostrarFaixas extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tabelaFaixas.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         tabelaFaixas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tabelaFaixasMouseClicked(evt);
@@ -341,7 +342,10 @@ public class MostrarFaixas extends javax.swing.JFrame {
             tabelaFaixas.setValueAt(tab.getNumFaixa() + " - " + tab.getIdAlbum(), i, 0);
             tabelaFaixas.setValueAt(tab.getDescricao(), i, 1);
             tabelaFaixas.setValueAt(tab.getDescricaoAlbum(), i, 2);
-            tabelaFaixas.setValueAt(tab.getTempoDuracao(), i, 3);
+            float time = tab.getTempoDuracao();
+            int minute = (int) time;
+            float second = ((time - minute) * 100);
+            tabelaFaixas.setValueAt(String.format("%s:%.0f", minute, second), i, 3);
             tabelaFaixas.setValueAt(tab.getNomeCompositor(), i, 4);
 
             i++;
