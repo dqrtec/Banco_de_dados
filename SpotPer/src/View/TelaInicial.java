@@ -54,7 +54,7 @@ public class TelaInicial extends javax.swing.JFrame {
 
         jPanel3.setBackground(new java.awt.Color(24, 24, 24));
 
-        labelTitulo.setFont(new java.awt.Font("Old English Text MT", 0, 36)); // NOI18N
+        labelTitulo.setFont(new java.awt.Font("MV Boli", 0, 36)); // NOI18N
         labelTitulo.setForeground(new java.awt.Color(255, 255, 255));
         labelTitulo.setText("Spotper");
 

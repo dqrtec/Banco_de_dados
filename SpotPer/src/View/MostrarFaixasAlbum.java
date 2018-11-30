@@ -11,6 +11,7 @@ import Controller.FaixaSQL;
 import Controller.PlaylistSQL;
 import Model.Faixa;
 import Model.Playlist;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -58,22 +59,26 @@ public class MostrarFaixasAlbum extends javax.swing.JFrame {
         labelTitulo = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabelaFaixas = new javax.swing.JTable();
+        jTextBuscar = new javax.swing.JTextField();
         menuMusica = new javax.swing.JLabel();
         menuArtista = new javax.swing.JLabel();
         menuAlbum = new javax.swing.JLabel();
         menuPlaylist = new javax.swing.JLabel();
-        jTextBuscar = new javax.swing.JTextField();
+        labelNovaPlaylist = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(40, 40, 40));
 
-        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel2.setBackground(new java.awt.Color(24, 24, 24));
         jPanel2.setPreferredSize(new java.awt.Dimension(832, 37));
 
-        labelTitulo.setFont(new java.awt.Font("Old English Text MT", 0, 36)); // NOI18N
+        labelTitulo.setFont(new java.awt.Font("MV Boli", 0, 36)); // NOI18N
+        labelTitulo.setForeground(new java.awt.Color(240, 240, 240));
         labelTitulo.setText("Spotper");
 
+        tabelaFaixas.setBackground(new java.awt.Color(24, 24, 24));
+        tabelaFaixas.setForeground(new java.awt.Color(240, 240, 240));
         tabelaFaixas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
@@ -108,7 +113,7 @@ public class MostrarFaixasAlbum extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(369, 369, 369)
                 .addComponent(labelTitulo)
-                .addContainerGap(347, Short.MAX_VALUE))
+                .addContainerGap(330, Short.MAX_VALUE))
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1)
@@ -120,35 +125,93 @@ public class MostrarFaixasAlbum extends javax.swing.JFrame {
                 .addGap(40, 40, 40)
                 .addComponent(labelTitulo)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 387, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
-        menuMusica.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        menuMusica.setForeground(new java.awt.Color(204, 204, 204));
-        menuMusica.setText("Músicas");
-
-        menuArtista.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        menuArtista.setForeground(new java.awt.Color(204, 204, 204));
-        menuArtista.setText("Artistas");
-
-        menuAlbum.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        menuAlbum.setForeground(new java.awt.Color(204, 204, 204));
-        menuAlbum.setText("Álbuns");
-
-        menuPlaylist.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        menuPlaylist.setForeground(new java.awt.Color(204, 204, 204));
-        menuPlaylist.setText("Playlists");
-
+        jTextBuscar.setBackground(new java.awt.Color(51, 51, 51));
+        jTextBuscar.setForeground(new java.awt.Color(255, 255, 255));
         jTextBuscar.setText("Buscar...");
-        jTextBuscar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextBuscarActionPerformed(evt);
-            }
-        });
+        jTextBuscar.setCaretColor(new java.awt.Color(255, 255, 255));
         jTextBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jTextBuscarKeyPressed(evt);
+            }
+        });
+
+        menuMusica.setFont(new java.awt.Font("MV Boli", 0, 18)); // NOI18N
+        menuMusica.setForeground(new java.awt.Color(155, 155, 155));
+        menuMusica.setText("Músicas");
+        menuMusica.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menuMusicaMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                menuMusicaMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                menuMusicaMouseExited(evt);
+            }
+        });
+
+        menuArtista.setFont(new java.awt.Font("MV Boli", 0, 18)); // NOI18N
+        menuArtista.setForeground(new java.awt.Color(155, 155, 155));
+        menuArtista.setText("Artistas");
+        menuArtista.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menuArtistaMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                menuArtistaMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                menuArtistaMouseExited(evt);
+            }
+        });
+
+        menuAlbum.setFont(new java.awt.Font("MV Boli", 0, 18)); // NOI18N
+        menuAlbum.setForeground(new java.awt.Color(155, 155, 155));
+        menuAlbum.setText("Álbuns");
+        menuAlbum.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menuAlbumMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                menuAlbumMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                menuAlbumMouseExited(evt);
+            }
+        });
+
+        menuPlaylist.setFont(new java.awt.Font("MV Boli", 0, 18)); // NOI18N
+        menuPlaylist.setForeground(new java.awt.Color(155, 155, 155));
+        menuPlaylist.setText("Playlists");
+        menuPlaylist.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menuPlaylistMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                menuPlaylistMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                menuPlaylistMouseExited(evt);
+            }
+        });
+
+        labelNovaPlaylist.setFont(new java.awt.Font("MV Boli", 0, 16)); // NOI18N
+        labelNovaPlaylist.setForeground(new java.awt.Color(155, 155, 155));
+        labelNovaPlaylist.setText("+ Nova Playlist");
+        labelNovaPlaylist.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        labelNovaPlaylist.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                labelNovaPlaylistMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                labelNovaPlaylistMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                labelNovaPlaylistMouseExited(evt);
             }
         });
 
@@ -157,31 +220,37 @@ public class MostrarFaixasAlbum extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(21, Short.MAX_VALUE)
+                .addGap(5, 5, 5)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(menuMusica)
-                    .addComponent(menuArtista)
-                    .addComponent(menuAlbum)
-                    .addComponent(menuPlaylist)
-                    .addComponent(jTextBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                    .addComponent(labelNovaPlaylist, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(menuArtista, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(menuAlbum, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(menuPlaylist, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(menuMusica, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jTextBuscar, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 532, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 514, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(41, 41, 41)
-                .addComponent(jTextBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(66, 66, 66)
-                .addComponent(menuMusica)
+                .addGap(42, 42, 42)
+                .addComponent(jTextBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 102, Short.MAX_VALUE)
+                .addComponent(menuMusica, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(menuArtista)
+                .addComponent(menuArtista, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(menuAlbum)
+                .addComponent(menuAlbum, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(menuPlaylist)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(menuPlaylist, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(86, 86, 86)
+                .addComponent(labelNovaPlaylist, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(22, 22, 22))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -197,18 +266,6 @@ public class MostrarFaixasAlbum extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jTextBuscarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextBuscarKeyPressed
-
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            String strTexto = jTextBuscar.getText();
-            JOptionPane.showMessageDialog(null, strTexto);
-        }
-    }//GEN-LAST:event_jTextBuscarKeyPressed
-
-    private void jTextBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextBuscarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextBuscarActionPerformed
 
     private void tabelaFaixasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaFaixasMouseClicked
         int row = tabelaFaixas.getSelectedRow();
@@ -275,6 +332,84 @@ public class MostrarFaixasAlbum extends javax.swing.JFrame {
             }
         });
     }//GEN-LAST:event_tabelaFaixasMouseClicked
+
+    private void jTextBuscarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextBuscarKeyPressed
+
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            String strTexto = jTextBuscar.getText();
+            new MostrarResultado(strTexto).setVisible(true);
+            dispose();
+        }
+    }//GEN-LAST:event_jTextBuscarKeyPressed
+
+    private void menuMusicaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuMusicaMouseClicked
+        new MostrarFaixas().setVisible(true);
+        dispose();
+    }//GEN-LAST:event_menuMusicaMouseClicked
+
+    private void menuMusicaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuMusicaMouseEntered
+        menuMusica.setForeground(Color.WHITE);
+    }//GEN-LAST:event_menuMusicaMouseEntered
+
+    private void menuMusicaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuMusicaMouseExited
+        Color gray = new Color(155,155,155);
+        menuMusica.setForeground(gray);
+    }//GEN-LAST:event_menuMusicaMouseExited
+
+    private void menuArtistaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuArtistaMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_menuArtistaMouseClicked
+
+    private void menuArtistaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuArtistaMouseEntered
+        menuArtista.setForeground(Color.WHITE);
+    }//GEN-LAST:event_menuArtistaMouseEntered
+
+    private void menuArtistaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuArtistaMouseExited
+        Color gray = new Color(155,155,155);
+        menuArtista.setForeground(gray);
+    }//GEN-LAST:event_menuArtistaMouseExited
+
+    private void menuAlbumMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuAlbumMouseClicked
+        new MostrarAlbum().setVisible(true);
+        dispose();
+    }//GEN-LAST:event_menuAlbumMouseClicked
+
+    private void menuAlbumMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuAlbumMouseEntered
+        menuAlbum.setForeground(Color.WHITE);
+    }//GEN-LAST:event_menuAlbumMouseEntered
+
+    private void menuAlbumMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuAlbumMouseExited
+        Color gray = new Color(155,155,155);
+        menuAlbum.setForeground(gray);
+    }//GEN-LAST:event_menuAlbumMouseExited
+
+    private void menuPlaylistMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuPlaylistMouseClicked
+        new MostrarPlaylist().setVisible(true);
+        dispose();
+    }//GEN-LAST:event_menuPlaylistMouseClicked
+
+    private void menuPlaylistMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuPlaylistMouseEntered
+        menuPlaylist.setForeground(Color.WHITE);
+    }//GEN-LAST:event_menuPlaylistMouseEntered
+
+    private void menuPlaylistMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuPlaylistMouseExited
+        Color gray = new Color(155,155,155);
+        menuPlaylist.setForeground(gray);
+    }//GEN-LAST:event_menuPlaylistMouseExited
+
+    private void labelNovaPlaylistMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelNovaPlaylistMouseClicked
+        new CriarPlaylist(this).setVisible(true);
+        dispose();
+    }//GEN-LAST:event_labelNovaPlaylistMouseClicked
+
+    private void labelNovaPlaylistMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelNovaPlaylistMouseEntered
+        labelNovaPlaylist.setForeground(Color.WHITE);
+    }//GEN-LAST:event_labelNovaPlaylistMouseEntered
+
+    private void labelNovaPlaylistMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelNovaPlaylistMouseExited
+        Color gray = new Color(155,155,155);
+        labelNovaPlaylist.setForeground(gray);
+    }//GEN-LAST:event_labelNovaPlaylistMouseExited
 
     /**
      * @param args the command line arguments
@@ -366,6 +501,7 @@ public class MostrarFaixasAlbum extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextBuscar;
+    private javax.swing.JLabel labelNovaPlaylist;
     private javax.swing.JLabel labelTitulo;
     private javax.swing.JLabel menuAlbum;
     private javax.swing.JLabel menuArtista;
