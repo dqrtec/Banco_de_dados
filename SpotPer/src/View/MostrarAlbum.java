@@ -97,6 +97,7 @@ public class MostrarAlbum extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tabelaAlbuns.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         tabelaAlbuns.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tabelaAlbunsMouseClicked(evt);

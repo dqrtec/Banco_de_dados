@@ -92,6 +92,7 @@ public class MostrarPlaylist extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tabelaPlaylists.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         tabelaPlaylists.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tabelaPlaylistsMouseClicked(evt);

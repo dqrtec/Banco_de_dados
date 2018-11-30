@@ -94,6 +94,7 @@ public class MostrarResultado extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        tabelaResultado.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         tabelaResultado.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tabelaResultadoMouseClicked(evt);

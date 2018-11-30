@@ -1,6 +1,4 @@
 ﻿==========| Falta |==========
-Abrir playlist com duplo clique (Mostrar playlists)
-remover faixa da playlist
 alterar playlist
 *ajeitar bug ao inserir album, colocar o tempo total da playlist correto
 Ajeitar menu de todas as telas
