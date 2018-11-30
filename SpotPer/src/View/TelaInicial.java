@@ -146,12 +146,18 @@ public class TelaInicial extends javax.swing.JFrame {
         });
 
         labelNovaPlaylist.setFont(new java.awt.Font("MV Boli", 0, 16)); // NOI18N
-        labelNovaPlaylist.setForeground(new java.awt.Color(255, 255, 255));
+        labelNovaPlaylist.setForeground(new java.awt.Color(155, 155, 155));
         labelNovaPlaylist.setText("+ Nova Playlist");
         labelNovaPlaylist.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         labelNovaPlaylist.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 labelNovaPlaylistMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                labelNovaPlaylistMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                labelNovaPlaylistMouseExited(evt);
             }
         });
 
@@ -235,7 +241,7 @@ public class TelaInicial extends javax.swing.JFrame {
 
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             String strTexto = jTextBuscar.getText();
-            JOptionPane.showMessageDialog(null, strTexto);
+            new MostrarResultado(strTexto).setVisible(true);
         }
     }//GEN-LAST:event_jTextBuscarKeyPressed
 
@@ -279,6 +285,15 @@ public class TelaInicial extends javax.swing.JFrame {
         Color gray = new Color(155,155,155);
         menuPlaylist.setForeground(gray);
     }//GEN-LAST:event_menuPlaylistMouseExited
+
+    private void labelNovaPlaylistMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelNovaPlaylistMouseEntered
+        labelNovaPlaylist.setForeground(Color.WHITE);
+    }//GEN-LAST:event_labelNovaPlaylistMouseEntered
+
+    private void labelNovaPlaylistMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelNovaPlaylistMouseExited
+        Color gray = new Color(155,155,155);
+        labelNovaPlaylist.setForeground(gray);
+    }//GEN-LAST:event_labelNovaPlaylistMouseExited
 
     /**
      * @param args the command line arguments

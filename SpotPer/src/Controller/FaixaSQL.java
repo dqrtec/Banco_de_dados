@@ -89,6 +89,35 @@ public class FaixaSQL extends ExecuteSQL {
         }
     }
 
+    public List<Faixa> listarResultadoFaixa(String busca) {
+        String sql = "SELECT id_album, num_faixa, descricao "
+                + "FROM faixa "
+                + "WHERE descricao LIKE '%" + busca + "%'";
+
+        List<Faixa> listaFaixa = new ArrayList();
+        try {
+            PreparedStatement ps = getConn().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs != null) {
+                while (rs.next()) {
+                    Faixa f = new Faixa();
+
+                    f.setIdAlbum(rs.getInt(1));
+                    f.setDescricao(rs.getString(2));
+
+                    listaFaixa.add(f);
+                }
+                return listaFaixa;
+            } else {
+                return null;
+            }
+
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
     public List<Faixa> listarFaixasAlbum(int idAlbum) {
 
         String sql = "SELECT num_faixa, f.descricao, tempo_duracao, tipo_gravacao, tc.descricao "

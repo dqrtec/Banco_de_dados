@@ -178,6 +178,35 @@ public class PlaylistSQL extends ExecuteSQL {
             return null;
         }
     }
+    
+    public List<Playlist> listarResultadoPlaylist(String busca) {
+        String sql = "SELECT id_playlist, nome "
+                + "FROM playlist "
+                + "WHERE nome LIKE '%" + busca + "%'";
+
+        List<Playlist> listaPlaylist = new ArrayList();
+        try {
+            PreparedStatement ps = getConn().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs != null) {
+                while (rs.next()) {
+                    Playlist p = new Playlist();
+
+                    p.setIdPlaylist(rs.getInt(1));
+                    p.setNome(rs.getString(2));
+
+                    listaPlaylist.add(p);
+                }
+                return listaPlaylist;
+            } else {
+                return null;
+            }
+
+        } catch (Exception e) {
+            return null;
+        }
+    }
 
     public String alteraPlaylist(Playlist p, String nome) {
         String sql = "UPDATE playlist SET nome=? "

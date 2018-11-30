@@ -84,6 +84,35 @@ public class AlbumSQL extends ExecuteSQL {
         }
     }
     
+    public List<Album> listarResultadoAlbum(String busca) {
+        String sql = "SELECT id_album, descricao "
+                + "FROM album "
+                + "WHERE descricao LIKE '%" + busca + "%'";
+
+        List<Album> listaAlbum = new ArrayList();
+        try {
+            PreparedStatement ps = getConn().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs != null) {
+                while (rs.next()) {
+                    Album a = new Album();
+
+                    a.setIdAlbum(rs.getInt(1));
+                    a.setDescricao(rs.getString(2));
+
+                    listaAlbum.add(a);
+                }
+                return listaAlbum;
+            } else {
+                return null;
+            }
+
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
     public String editaAlbum(int codigoAlbum, String descricao, String dataCompra, String tipoCompra, String dataGravacao, float precoCompra, int codigoGravadora) {
         String sql = "UPDATE album SET descricao = ?, data_compra = ?, "
                 + "tipo_compra = ?, data_gravacao = ?, preco_compra = ?, "
