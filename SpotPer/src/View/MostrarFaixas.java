@@ -20,6 +20,7 @@ import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
 import javax.sound.sampled.Clip;
+import javax.sound.sampled.Control;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -35,9 +36,6 @@ public class MostrarFaixas extends javax.swing.JFrame {
 
     private Clip clip;
 
-    /**
-     * Creates new form MostrarFaixas
-     */
     public MostrarFaixas() {
         initComponents();
         this.clip = null;
@@ -223,7 +221,7 @@ public class MostrarFaixas extends javax.swing.JFrame {
         int row = tabelaFaixas.getSelectedRow();
         String codigo = (String) tabelaFaixas.getValueAt(row, 0);
         JFrame aqui = this;
-        
+
         int numFaixa = parseInt(codigo.split(" - ")[0]);
         int idAlbum = parseInt(codigo.split(" - ")[1]);
 
@@ -247,7 +245,6 @@ public class MostrarFaixas extends javax.swing.JFrame {
             playlistSelected.addActionListener(
                     new java.awt.event.ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-
                     Faixa faixa = selecionaFaixa(numFaixa, idAlbum);
                     adicionarFaixaPlaylist(playlist, faixa);
                 }
@@ -257,9 +254,8 @@ public class MostrarFaixas extends javax.swing.JFrame {
         menuItemTocar.addActionListener(
                 new java.awt.event.ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                int row = tabelaFaixas.getSelectedRow();
-                int numFaixa = (int) tabelaFaixas.getValueAt(row, 0);
                 Faixa faixa = selecionaFaixa(numFaixa, idAlbum);
+                
                 if (clip != null) {
                     clip.stop();
                 }
@@ -270,9 +266,7 @@ public class MostrarFaixas extends javax.swing.JFrame {
         menuItemArtista.addActionListener(
                 new java.awt.event.ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                int row = tabelaFaixas.getSelectedRow();
-                int numFaixa = (int) tabelaFaixas.getValueAt(row, 0);
-                System.out.println("Número da faixa 1 - " + numFaixa);
+
             }
         });
 

@@ -1,9 +1,8 @@
 ﻿==========| Falta |==========
-Ajeitar o menu popup de Faixas
-*ajeitar bug ao inserir album, colocar o tempo total da playlist correto
 Abrir playlist com duplo clique (Mostrar playlists)
-alterar playlist
 remover faixa da playlist
+alterar playlist
+*ajeitar bug ao inserir album, colocar o tempo total da playlist correto
 Ajeitar menu de todas as telas
 Inserir controle de musica
 Ajeitar a interface
