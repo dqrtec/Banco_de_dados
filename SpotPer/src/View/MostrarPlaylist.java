@@ -295,6 +295,7 @@ public class MostrarPlaylist extends javax.swing.JFrame {
                         "Atenção!", JOptionPane.YES_NO_OPTION);
                 if (dialogResult == JOptionPane.YES_OPTION) {
                     removerPlaylist(idPlaylist);
+                    atualizaTabelaPlaylist();
                 }
             }
         });
