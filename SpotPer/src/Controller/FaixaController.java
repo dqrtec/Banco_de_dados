@@ -12,11 +12,11 @@ import javax.sound.sampled.DataLine;
  * @author Tibet Teixeira
  */
 public class FaixaController {
-    
-    public Clip tocarFaixa(Faixa faixa) {
-       Clip clip = null;
-       
-       try {
+
+    public static Clip clip = null;
+
+    public static Clip tocarFaixa(Faixa faixa) {
+        try {
             File soundFile = new File(faixa.getDiretorio());
             AudioInputStream sound = AudioSystem.getAudioInputStream(soundFile);
             DataLine.Info info = new DataLine.Info(Clip.class, sound.getFormat());
@@ -26,11 +26,12 @@ public class FaixaController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-       
-       return clip;
+
+        return clip;
     }
-    
-    public void pararFaixa(Clip clip) {
+
+    public static void pararFaixa() {
         clip.stop();
     }
+
 }

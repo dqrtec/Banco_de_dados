@@ -35,12 +35,10 @@ import javax.swing.table.DefaultTableModel;
 public class MostrarFaixasAlbum extends javax.swing.JFrame {
 
     private int idAlbum;
-    private Clip clip;
 
     public MostrarFaixasAlbum(int idAlbum, String descricao) {
         initComponents();
         this.idAlbum = idAlbum;
-        this.clip = null;
         labelTitulo.setText(descricao);
         atualizaTabelaFaixas();
     }
@@ -301,8 +299,10 @@ public class MostrarFaixasAlbum extends javax.swing.JFrame {
                 new java.awt.event.ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 Faixa faixa = selecionaFaixa(numFaixa);
-                if (clip != null) clip.stop();
-                clip = new FaixaController().tocarFaixa(faixa);
+                if (FaixaController.clip != null) {
+                    FaixaController.pararFaixa();
+                }
+                FaixaController.clip = FaixaController.tocarFaixa(faixa);
             }
         });
 

@@ -7,16 +7,27 @@ package View;
 
 import Controller.AlbumSQL;
 import Controller.Conexao;
+import Controller.FaixaController;
 import Controller.FaixaSQL;
 import Controller.PlaylistSQL;
 import Model.Album;
 import Model.Faixa;
 import Model.Playlist;
 import java.awt.Color;
+import java.awt.Point;
+import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+import static java.lang.Integer.parseInt;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.List;
+import javax.sound.sampled.Clip;
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JPopupMenu;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 
@@ -36,6 +47,7 @@ public class MostrarResultado extends javax.swing.JFrame {
         this.busca = busca;
         labelTitulo.setText("Resultado de: '" + busca + "'");
         jTextBuscar.setText(busca);
+        atualizaTabelaResultado(busca);
     }
 
     /**
@@ -50,7 +62,7 @@ public class MostrarResultado extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         labelTitulo = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        jScrollPane2 = new javax.swing.JScrollPane();
         tabelaResultado = new javax.swing.JTable();
         labelNovaPlaylist = new javax.swing.JLabel();
         menuMusica = new javax.swing.JLabel();
@@ -74,17 +86,14 @@ public class MostrarResultado extends javax.swing.JFrame {
         tabelaResultado.setForeground(new java.awt.Color(240, 240, 240));
         tabelaResultado.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+
             },
             new String [] {
                 "#", "Descrição", "Tipo"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Integer.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
                 false, false, false
@@ -98,8 +107,6 @@ public class MostrarResultado extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        tabelaResultado.setGridColor(new java.awt.Color(240, 240, 240));
-        tabelaResultado.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         tabelaResultado.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tabelaResultadoMouseClicked(evt);
@@ -108,7 +115,7 @@ public class MostrarResultado extends javax.swing.JFrame {
                 tabelaResultadoMousePressed(evt);
             }
         });
-        jScrollPane1.setViewportView(tabelaResultado);
+        jScrollPane2.setViewportView(tabelaResultado);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -117,8 +124,8 @@ public class MostrarResultado extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 833, Short.MAX_VALUE)
-                    .addComponent(labelTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(labelTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, 833, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -126,8 +133,8 @@ public class MostrarResultado extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(40, 40, 40)
                 .addComponent(labelTitulo)
-                .addGap(17, 17, 17)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 386, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -244,7 +251,7 @@ public class MostrarResultado extends javax.swing.JFrame {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 512, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 542, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(41, 41, 41)
                 .addComponent(jTextBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -276,7 +283,7 @@ public class MostrarResultado extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void labelNovaPlaylistMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelNovaPlaylistMouseExited
-        Color gray = new Color(155,155,155);
+        Color gray = new Color(155, 155, 155);
         labelNovaPlaylist.setForeground(gray);
     }//GEN-LAST:event_labelNovaPlaylistMouseExited
 
@@ -289,84 +296,6 @@ public class MostrarResultado extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_labelNovaPlaylistMouseClicked
 
-    private void tabelaResultadoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaResultadoMousePressed
-
-    }//GEN-LAST:event_tabelaResultadoMousePressed
-
-    private void tabelaResultadoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaResultadoMouseClicked
-        int row = tabelaResultado.getSelectedRow();
-        String codigo = (String) tabelaResultado.getValueAt(row, 0);
-        /*JFrame aqui = this;
-
-        int numFaixa = parseInt(codigo.split(" - ")[0]);
-        int idAlbum = parseInt(codigo.split(" - ")[1]);
-
-        JPopupMenu jPopupMenu = new JPopupMenu();
-
-        JMenuItem menuItemTocar = new JMenuItem("Tocar");
-        JMenuItem menuItemArtista = new JMenuItem("Ir para artista");
-        JMenu menuItemPlaylist = new JMenu("Adicionar à Playlist");
-        JMenuItem menuCriarPlaylist = new JMenuItem("Nova Playlist");
-
-        jPopupMenu.add(menuItemTocar);
-        jPopupMenu.add(menuItemArtista);
-        jPopupMenu.add(menuItemPlaylist);
-        menuItemPlaylist.add(menuCriarPlaylist);
-
-        List<Playlist> listaPlaylist = listarPlaylists();
-
-        for (Playlist playlist : listaPlaylist) {
-            JMenuItem playlistSelected = new JMenuItem(playlist.getNome());
-            menuItemPlaylist.add(playlistSelected);
-            playlistSelected.addActionListener(
-                new java.awt.event.ActionListener() {
-                    public void actionPerformed(ActionEvent e) {
-
-                        Faixa faixa = selecionaFaixa(numFaixa, idAlbum);
-                        adicionarFaixaPlaylist(playlist, faixa);
-                    }
-                });
-            }
-
-            menuItemTocar.addActionListener(
-                new java.awt.event.ActionListener() {
-                    public void actionPerformed(ActionEvent e) {
-                        int row = tabelaResultado.getSelectedRow();
-                        int numFaixa = (int) tabelaResultado.getValueAt(row, 0);
-                        Faixa faixa = selecionaFaixa(numFaixa, idAlbum);
-                        if (clip != null) {
-                            clip.stop();
-                        }
-                        clip = new FaixaController().tocarFaixa(faixa);
-                    }
-                });
-
-                menuItemArtista.addActionListener(
-                    new java.awt.event.ActionListener() {
-                        public void actionPerformed(ActionEvent e) {
-                            int row = tabelaResultado.getSelectedRow();
-                            int numFaixa = (int) tabelaResultado.getValueAt(row, 0);
-                            System.out.println("Número da faixa 1 - " + numFaixa);
-                        }
-                    });
-
-                    menuCriarPlaylist.addActionListener(
-                        new java.awt.event.ActionListener() {
-                            public void actionPerformed(ActionEvent e) {
-                                new CriarPlaylist(aqui).setVisible(true);
-                            }
-                        });
-
-                        tabelaResultado.addMouseListener(
-                            new java.awt.event.MouseAdapter() {
-                                public void mouseClicked(MouseEvent e) {
-                                    if (e.getButton() == MouseEvent.BUTTON3) {
-                                        jPopupMenu.show(tabelaResultado, e.getX(), e.getY());
-                                    }
-                                }
-                            });*/
-    }//GEN-LAST:event_tabelaResultadoMouseClicked
-
     private void menuMusicaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuMusicaMouseClicked
         new MostrarFaixas().setVisible(true);
         dispose();
@@ -377,7 +306,7 @@ public class MostrarResultado extends javax.swing.JFrame {
     }//GEN-LAST:event_menuMusicaMouseEntered
 
     private void menuMusicaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuMusicaMouseExited
-        Color gray = new Color(155,155,155);
+        Color gray = new Color(155, 155, 155);
         menuMusica.setForeground(gray);
     }//GEN-LAST:event_menuMusicaMouseExited
 
@@ -390,7 +319,7 @@ public class MostrarResultado extends javax.swing.JFrame {
     }//GEN-LAST:event_menuArtistaMouseEntered
 
     private void menuArtistaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuArtistaMouseExited
-        Color gray = new Color(155,155,155);
+        Color gray = new Color(155, 155, 155);
         menuArtista.setForeground(gray);
     }//GEN-LAST:event_menuArtistaMouseExited
 
@@ -404,7 +333,7 @@ public class MostrarResultado extends javax.swing.JFrame {
     }//GEN-LAST:event_menuAlbumMouseEntered
 
     private void menuAlbumMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuAlbumMouseExited
-        Color gray = new Color(155,155,155);
+        Color gray = new Color(155, 155, 155);
         menuAlbum.setForeground(gray);
     }//GEN-LAST:event_menuAlbumMouseExited
 
@@ -418,7 +347,7 @@ public class MostrarResultado extends javax.swing.JFrame {
     }//GEN-LAST:event_menuPlaylistMouseEntered
 
     private void menuPlaylistMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuPlaylistMouseExited
-        Color gray = new Color(155,155,155);
+        Color gray = new Color(155, 155, 155);
         menuPlaylist.setForeground(gray);
     }//GEN-LAST:event_menuPlaylistMouseExited
 
@@ -430,6 +359,187 @@ public class MostrarResultado extends javax.swing.JFrame {
             dispose();
         }
     }//GEN-LAST:event_jTextBuscarKeyPressed
+
+    private void tabelaResultadoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaResultadoMouseClicked
+        int row = tabelaResultado.getSelectedRow();
+        String tipo = (String) tabelaResultado.getValueAt(row, 2);
+        JFrame aqui = this;
+
+        if (tipo.equals("Álbum")) {
+            System.out.println(tipo);
+            int codigo = (int) tabelaResultado.getValueAt(row, 0);
+            System.out.println(codigo);
+            JPopupMenu jPopupMenu = new JPopupMenu();
+
+            JMenuItem menuItemEditar = new JMenuItem("Editar");
+            JMenu menuItemPlaylist = new JMenu("Adicionar à Playlist");
+            JMenuItem menuCriarPlaylist = new JMenuItem("Nova Playlist");
+
+            jPopupMenu.add(menuItemEditar);
+            jPopupMenu.add(menuItemPlaylist);
+            menuItemPlaylist.add(menuCriarPlaylist);
+
+            List<Playlist> listaPlaylist = listarPlaylists();
+
+            for (Playlist playlist : listaPlaylist) {
+                JMenuItem playlistSelected = new JMenuItem(playlist.getNome());
+                menuItemPlaylist.add(playlistSelected);
+                playlistSelected.addActionListener(
+                        new java.awt.event.ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        Album album = selecionaAlbum(codigo);
+                        adicionarAlbumPlaylist(playlist, album);
+                    }
+                });
+            }
+
+            menuItemEditar.addActionListener(
+                    new java.awt.event.ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    Album album = selecionaAlbum(codigo);
+                    new EditarAlbum(album).setVisible(true);
+                    dispose();
+                }
+            });
+
+            menuCriarPlaylist.addActionListener(
+                    new java.awt.event.ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    new CriarPlaylist(aqui).setVisible(true);
+                    dispose();
+                }
+            });
+
+            tabelaResultado.addMouseListener(
+                    new java.awt.event.MouseAdapter() {
+                public void mouseClicked(MouseEvent e) {
+                    if (e.getButton() == MouseEvent.BUTTON3) {
+                        jPopupMenu.show(tabelaResultado, e.getX(), e.getY());
+                    }
+                }
+            });
+        } else if (tipo.equals("Playlist")) {
+            int idPlaylist = (int) tabelaResultado.getValueAt(row, 0);
+
+            JPopupMenu jPopupMenu = new JPopupMenu();
+
+            JMenuItem menuItemEditar = new JMenuItem("Editar");
+            JMenuItem menuItemRemover = new JMenuItem("Remover");
+
+            jPopupMenu.add(menuItemEditar);
+            jPopupMenu.add(menuItemRemover);
+
+            menuItemEditar.addActionListener(
+                    new java.awt.event.ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+
+                }
+            });
+
+            menuItemRemover.addActionListener(
+                    new java.awt.event.ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    int dialogResult = JOptionPane.showConfirmDialog(null, "Deseja realmente excluir?",
+                            "Atenção!", JOptionPane.YES_NO_OPTION);
+                    if (dialogResult == JOptionPane.YES_OPTION) {
+                        removerPlaylist(idPlaylist);
+                        atualizaTabelaResultado(busca);
+                    }
+                }
+            });
+
+            tabelaResultado.addMouseListener(
+                    new java.awt.event.MouseAdapter() {
+                public void mouseClicked(MouseEvent e) {
+                    if (e.getButton() == MouseEvent.BUTTON3) {
+                        jPopupMenu.show(tabelaResultado, e.getX(), e.getY());
+                    }
+                }
+            });
+        } else if (tipo.equals("Faixa")) {
+
+            String codigo = (String) tabelaResultado.getValueAt(row, 0);
+
+            int numFaixa = parseInt(codigo.split(" - ")[0]);
+            int idAlbum = parseInt(codigo.split(" - ")[1]);
+
+            JPopupMenu jPopupMenu = new JPopupMenu();
+
+            JMenuItem menuItemTocar = new JMenuItem("Tocar");
+            JMenu menuItemPlaylist = new JMenu("Adicionar à Playlist");
+            JMenuItem menuCriarPlaylist = new JMenuItem("Nova Playlist");
+
+            jPopupMenu.add(menuItemTocar);
+            jPopupMenu.add(menuItemPlaylist);
+            menuItemPlaylist.add(menuCriarPlaylist);
+
+            List<Playlist> listaPlaylist = listarPlaylists();
+
+            for (Playlist playlist : listaPlaylist) {
+                JMenuItem playlistSelected = new JMenuItem(playlist.getNome());
+                menuItemPlaylist.add(playlistSelected);
+                playlistSelected.addActionListener(
+                        new java.awt.event.ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        Faixa faixa = selecionaFaixa(numFaixa, idAlbum);
+                        adicionarFaixaPlaylist(playlist, faixa);
+                    }
+                });
+            }
+
+            menuItemTocar.addActionListener(
+                    new java.awt.event.ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    Faixa faixa = selecionaFaixa(numFaixa, idAlbum);
+
+                    if (FaixaController.clip != null) {
+                        FaixaController.pararFaixa();
+                    }
+                    FaixaController.clip = FaixaController.tocarFaixa(faixa);
+                }
+            });
+
+            menuCriarPlaylist.addActionListener(
+                    new java.awt.event.ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    new CriarPlaylist(aqui).setVisible(true);
+                }
+            });
+
+            tabelaResultado.addMouseListener(
+                    new java.awt.event.MouseAdapter() {
+                public void mouseClicked(MouseEvent e) {
+                    if (e.getButton() == MouseEvent.BUTTON3) {
+                        jPopupMenu.show(tabelaResultado, e.getX(), e.getY());
+                    }
+                }
+            });
+
+        }
+    }//GEN-LAST:event_tabelaResultadoMouseClicked
+
+    private void tabelaResultadoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabelaResultadoMousePressed
+        int row = tabelaResultado.getSelectedRow();
+        String tipo = (String) tabelaResultado.getValueAt(row, 2);
+        if (tipo.equals("Álbum")) {
+
+            Point point = evt.getPoint();
+            if (evt.getClickCount() == 2 && tabelaResultado.getSelectedRow() != -1) {
+                int idAlbum = (int) tabelaResultado.getValueAt(row, 0);
+                String descricao = (String) tabelaResultado.getValueAt(row, 1);
+                new MostrarFaixasAlbum(idAlbum, descricao).setVisible(true);
+                dispose();
+            }
+        } else if (tipo.equals("Playlist")) {
+            Point point = evt.getPoint();
+            if (evt.getClickCount() == 2 && tabelaResultado.getSelectedRow() != -1) {
+                int idPlaylist = (int) tabelaResultado.getValueAt(row, 0);
+                String nomePlaylist = (String) tabelaResultado.getValueAt(row, 1);
+                new MostrarFaixasPlaylist(idPlaylist, nomePlaylist).setVisible(true);
+                dispose();
+            }
+        }
+    }//GEN-LAST:event_tabelaResultadoMousePressed
 
     /**
      * @param args the command line arguments
@@ -534,10 +644,59 @@ public class MostrarResultado extends javax.swing.JFrame {
         return resultadoPlaylist;
     }
 
+    private List<Playlist> listarPlaylists() {
+        Connection conn = Conexao.abrirConexao();
+        PlaylistSQL playlistSQL = new PlaylistSQL(conn);
+        List<Playlist> lista = playlistSQL.listarPlaylist();
+        Conexao.fecharConexao(conn);
+
+        return lista;
+    }
+
+    private void adicionarAlbumPlaylist(Playlist p, Album a) {
+        Connection conn = Conexao.abrirConexao();
+        PlaylistSQL playlistSQL = new PlaylistSQL(conn);
+        playlistSQL.adicionaAlbumPlaylist(p, a);
+        Conexao.fecharConexao(conn);
+    }
+
+    private Album selecionaAlbum(int idAlbum) {
+        Connection conn = Conexao.abrirConexao();
+        AlbumSQL albumSQL = new AlbumSQL(conn);
+        Album album = albumSQL.listaAlbum(idAlbum);
+        Conexao.fecharConexao(conn);
+
+        return album;
+    }
+
+    private void removerPlaylist(int idPlaylist) {
+        Connection conn = Conexao.abrirConexao();
+        PlaylistSQL playlistSQL = new PlaylistSQL(conn);
+        String message = playlistSQL.removerPlaylist(idPlaylist);
+        Conexao.fecharConexao(conn);
+        JOptionPane.showMessageDialog(null, message);
+    }
+
+    private void adicionarFaixaPlaylist(Playlist p, Faixa f) {
+        Connection conn = Conexao.abrirConexao();
+        PlaylistSQL playlistSQL = new PlaylistSQL(conn);
+        playlistSQL.adicionaFaixaPlaylist(p, f);
+        Conexao.fecharConexao(conn);
+    }
+
+    private Faixa selecionaFaixa(int numFaixa, int idAlbum) {
+        Connection conn = Conexao.abrirConexao();
+        FaixaSQL faixaSQL = new FaixaSQL(conn);
+        Faixa faixa = faixaSQL.listaFaixa(idAlbum, numFaixa);
+        Conexao.fecharConexao(conn);
+
+        return faixa;
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextField jTextBuscar;
     private javax.swing.JLabel labelNovaPlaylist;
     private javax.swing.JLabel labelTitulo;

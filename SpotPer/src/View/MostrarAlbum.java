@@ -284,12 +284,10 @@ public class MostrarAlbum extends javax.swing.JFrame {
 
         JPopupMenu jPopupMenu = new JPopupMenu();
 
-        JMenuItem menuItemTocar = new JMenuItem("Tocar");
         JMenuItem menuItemEditar = new JMenuItem("Editar");
         JMenu menuItemPlaylist = new JMenu("Adicionar à Playlist");
         JMenuItem menuCriarPlaylist = new JMenuItem("Nova Playlist");
 
-        jPopupMenu.add(menuItemTocar);
         jPopupMenu.add(menuItemEditar);
         jPopupMenu.add(menuItemPlaylist);
         menuItemPlaylist.add(menuCriarPlaylist);

@@ -104,7 +104,8 @@ public class FaixaSQL extends ExecuteSQL {
                     Faixa f = new Faixa();
 
                     f.setIdAlbum(rs.getInt(1));
-                    f.setDescricao(rs.getString(2));
+                    f.setNumFaixa(rs.getInt(2));
+                    f.setDescricao(rs.getString(3));
 
                     listaFaixa.add(f);
                 }

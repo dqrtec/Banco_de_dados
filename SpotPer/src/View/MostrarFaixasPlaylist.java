@@ -33,12 +33,10 @@ import javax.swing.table.DefaultTableModel;
 public class MostrarFaixasPlaylist extends javax.swing.JFrame {
 
     private int idPlaylist;
-    private Clip clip;
 
     public MostrarFaixasPlaylist(int idPlaylist, String nomePlaylist) {
         initComponents();
         this.idPlaylist = idPlaylist;
-        this.clip = null;
         labelTitulo.setText(nomePlaylist);
         atualizaTabelaFaixas();
     }
@@ -313,10 +311,10 @@ public class MostrarFaixasPlaylist extends javax.swing.JFrame {
                 new java.awt.event.ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 Faixa faixa = selecionaFaixa(numFaixa, idAlbum);
-                if (clip != null) {
-                    clip.stop();
+                if (FaixaController.clip != null) {
+                    FaixaController.pararFaixa();
                 }
-                clip = new FaixaController().tocarFaixa(faixa);
+                FaixaController.clip = FaixaController.tocarFaixa(faixa);
             }
         });
 

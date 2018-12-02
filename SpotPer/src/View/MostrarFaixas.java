@@ -31,15 +31,12 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author tibet
+ * @author Tibet Teixeira
  */
 public class MostrarFaixas extends javax.swing.JFrame {
 
-    private Clip clip;
-
     public MostrarFaixas() {
         initComponents();
-        this.clip = null;
         atualizaTabelaFaixa();
     }
 
@@ -285,12 +282,10 @@ public class MostrarFaixas extends javax.swing.JFrame {
         JPopupMenu jPopupMenu = new JPopupMenu();
 
         JMenuItem menuItemTocar = new JMenuItem("Tocar");
-        JMenuItem menuItemArtista = new JMenuItem("Ir para artista");
         JMenu menuItemPlaylist = new JMenu("Adicionar à Playlist");
         JMenuItem menuCriarPlaylist = new JMenuItem("Nova Playlist");
 
         jPopupMenu.add(menuItemTocar);
-        jPopupMenu.add(menuItemArtista);
         jPopupMenu.add(menuItemPlaylist);
         menuItemPlaylist.add(menuCriarPlaylist);
 
@@ -313,17 +308,10 @@ public class MostrarFaixas extends javax.swing.JFrame {
             public void actionPerformed(ActionEvent e) {
                 Faixa faixa = selecionaFaixa(numFaixa, idAlbum);
                 
-                if (clip != null) {
-                    clip.stop();
+                if (FaixaController.clip != null) {
+                    FaixaController.pararFaixa();
                 }
-                clip = new FaixaController().tocarFaixa(faixa);
-            }
-        });
-
-        menuItemArtista.addActionListener(
-                new java.awt.event.ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-
+                FaixaController.clip = FaixaController.tocarFaixa(faixa);
             }
         });
 
