@@ -73,6 +73,7 @@ public class MostrarFaixasPlaylist extends javax.swing.JFrame {
 
         labelTitulo.setFont(new java.awt.Font("MV Boli", 0, 36)); // NOI18N
         labelTitulo.setForeground(new java.awt.Color(240, 240, 240));
+        labelTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelTitulo.setText("Spotper");
 
         tabelaFaixas.setBackground(new java.awt.Color(24, 24, 24));
@@ -116,12 +117,10 @@ public class MostrarFaixasPlaylist extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(369, 369, 369)
-                .addComponent(labelTitulo)
-                .addContainerGap(330, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 812, Short.MAX_VALUE)
+                    .addComponent(labelTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(

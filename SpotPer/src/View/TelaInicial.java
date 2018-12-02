@@ -56,6 +56,7 @@ public class TelaInicial extends javax.swing.JFrame {
 
         labelTitulo.setFont(new java.awt.Font("MV Boli", 0, 36)); // NOI18N
         labelTitulo.setForeground(new java.awt.Color(255, 255, 255));
+        labelTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelTitulo.setText("Spotper");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
@@ -63,9 +64,9 @@ public class TelaInicial extends javax.swing.JFrame {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(369, 369, 369)
-                .addComponent(labelTitulo)
-                .addContainerGap(347, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(labelTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, 829, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
