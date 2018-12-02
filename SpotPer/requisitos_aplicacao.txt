@@ -1,10 +1,7 @@
 ﻿==========| Falta |==========
 alterar playlist
 *ajeitar bug ao inserir album, colocar o tempo total da playlist correto
-Ajeitar menu de todas as telas
 Inserir controle de musica
-Ajeitar a interface
 'tocar' faixa na playlist altera a ultima vez tocada e a quantidade de vezes
 
-listar as faixas de uma playlist
 listar os albuns de um artista (compositor ou interprete)
