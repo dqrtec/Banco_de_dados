@@ -260,6 +260,7 @@ public class CriarPlaylist extends javax.swing.JFrame {
 
     private void btnCriarPlaylistMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCriarPlaylistMouseClicked
         criarPlaylist();
+        frame.setVisible(true);
         dispose();
     }//GEN-LAST:event_btnCriarPlaylistMouseClicked
 
