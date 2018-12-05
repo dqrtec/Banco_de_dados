@@ -23,3 +23,26 @@ insert into faixa values (1, 4, 'Gloria In Excelsis Deo', 4.50, 'cdd', 44)
 insert into faixa values (2, 4, 'Outono', 3.50, 'cdd', 44)
 insert into faixa values (3, 4, 'The Four Seasons', 2.50, 'cdd', 44)
 insert into faixa values (4, 4, 'Arioso', 1.50, 'cdd', 44)
+
+insert into playlist values (13,2016-01-01,15,'play Barroco')
+insert into playlist values (45,2016-01-01,15,'play quase barroco')
+
+insert into faixa_playlist values (13,1,4,13,208-01-01)
+insert into faixa_playlist values (13,2,4,13,208-01-01)
+insert into faixa_playlist values (13,3,4,13,208-01-01)
+insert into faixa_playlist values (13,4,4,13,208-01-01)
+insert into faixa_playlist values (45,3,4,13,208-01-01)
+insert into faixa_playlist values (45,1,1,13,208-01-01)
+
+insert into periodo_musical values (1,2000-01-01,2000-01-01,'Barroco')
+insert into periodo_musical values (2,2000-01-01,2000-01-01,'classico')
+
+insert into compositor values (1,null,'a','a','Compo barroco',2001-01-01,1)
+insert into compositor values (2,null,'a','a','Compo classico',2001-01-01,2)
+
+insert into compositor_faixa values (1,1,4)
+insert into compositor_faixa values (1,2,4)
+insert into compositor_faixa values (1,3,4)
+insert into compositor_faixa values (1,4,4)
+insert into compositor_faixa values (2,4,4)
+insert into compositor_faixa values (2,1,1)
