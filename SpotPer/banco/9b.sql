@@ -1,4 +1,4 @@
---musicas feitas por Dvorack
+-- musicas feitas por Dvorack
 create view musicasDvorack as
 select cf.num_faixa as 'num_faixa', cf.id_album as 'id_album'
 from compositor c, faixa_compositor cf
@@ -6,7 +6,7 @@ where
 		c.id_compositor = cf.id_compositor and
 		c.nome = 'Compo barroco'
 
-
+-- Consulta
 select id_playlist 
 from faixa_playlist fp
 inner join musicasDvorack md ON (md.id_album = fp.id_album and md.num_faixa = fp.num_faixa)
