@@ -298,6 +298,42 @@ begin
 end
 GO
 
+
+create trigger musica_add_compositor_barroco
+on faixa_compositor
+for insert
+as 
+begin
+	declare @num_faixa smallint
+	declare @id_album smallint
+	declare @id_compositor smallint
+	declare cursor_faixa CURSOR SCROLL FOR
+	select f.num_faixa, f.id_album, c.id_compositor
+	from faixa f, compositor c
+	where f.tipo_gravacao like 'ADD' and 
+	c.id_periodo = (select id_periodo from periodo_musical where descricao like '_arroco')
+
+	OPEN cursor_faixa
+	fetch first FROM cursor_faixa
+	INTO  @num_faixa, @id_album, @id_compositor
+	while (@@FETCH_STATUS = 0)
+	begin
+		
+		if @num_faixa = (select i.num_faixa from inserted i) and 
+			@id_album = (select i.id_album from inserted i) and
+			@id_compositor = (select i.id_compositor from inserted i)
+		begin
+			deallocate cursor_faixa
+			RAISERROR ('Erro: Faixa do tipo ADD e compositor BARROCO', 10, 6)
+			ROLLBACK TRANSACTION
+		end 
+		fetch next FROM cursor_faixa
+		INTO  @num_faixa, @id_album, @id_compositor
+	end
+	deallocate cursor_faixa
+end
+GO
+
 ------------------| MATERIALIZED VIEW |------------------
 
 CREATE VIEW playlist_qtd_album(id_playlist,nome,qtd)
