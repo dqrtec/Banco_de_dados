@@ -2,26 +2,25 @@ SELECT p.nome
 FROM
 	playlist p
 where
-	0 =
-	(SELECT count(*)
+	
+	(
+	SELECT * --count(*)
 	from 
-		((SELECT fp.num_faixa,fp.id_album FROM faixa_playlist fp
-			inner join faixa_playlist fp on p.cod_playlist = fp.cod_playlist)
-		except
-		(SELECT f.num_faixa,f.id_album
-			FROM faixa f, tipo_composicao tc, faixa_compositor fc,compositor c, periodo_musical pm
+		(
+			(SELECT fp.num_faixa,fp.id_album 
+			 FROM faixa_playlist fp
+			 where p.id_playlist = fp.id_playlist)
+			except
+			(SELECT f.num_faixa,f.id_album
+			FROM faixa f
+			INNER JOIN tipo_composicao tc ON (tc.id_tipo_composicao = f.id_tipo_composicao)
+			INNER JOIN faixa_compositor fc ON (f.num_faixa = fc.num_faixa and f.id_album = fc.id_album)
+			INNER JOIN compositor c ON (c.id_compositor = fc.id_compositor)
+			INNER JOIN periodo_musical pm ON (c.id_periodo = pm.id_periodo)
 			WHERE
-				tc.descricao like 'concerto' and
-				pm.descricao like 'barroco' and
-				tc.id_tipo_composicao = f.id_tipo_composicao and
-				f.num_faixa = fc.num_faixa and
-				f.id_album = fc.id_album and
-				fc.id_compositor = c.id_compositor and
-				c.id_periodo = pm.id_periodo
-		group by f.num_faixa,f.id_album)
+				tc.descricao like '_oncerto' and
+				pm.descricao like '_arroco'
+			--group by f.id_album, f.num_faixa
+			)
 		)
-	)
-/*
-	(SELECT count(*) FROM faixa_playlist fp
-		inner join faixa_playlist fp on p.cod_playlist = fp.cod_playlist)
-*/
+	) = 0
