@@ -1,5 +1,5 @@
 select f.descricao
-from faixa f, tipo_composicao tc, compositor_faixa cf, compositor c, periodo_musical
+from faixa f, tipo_composicao tc, faixa_compositor cf, compositor c, periodo_musical pm
 where 
 		tc.descricao like 'Concerto' and
 		pm.descricao like 'Barroco' and

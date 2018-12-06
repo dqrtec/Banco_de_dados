@@ -280,17 +280,6 @@ ALTER TABLE faixa_playlist
 		ON UPDATE CASCADE;
 		
 ------------------| CONSULTAS |------------------
-
--- 9 a)
-select album.id_album
-from album
-where preco_compra > 
-	(
-		select avg(preco_compra) from album
-)
-GO
-
--- 9 b)
 -- 9 c)
 select top 1 c.nome, count(*) from compositor c, faixa_compositor cf, faixa_playlist fp
 where 
