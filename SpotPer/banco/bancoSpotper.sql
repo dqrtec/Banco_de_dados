@@ -113,7 +113,8 @@ CREATE TABLE faixa(
 	id_album INT NOT NULL,
 	descricao VARCHAR(50) NOT NULL,
 	tempo_duracao DECIMAL(10,2) NOT NULL,
-	tipo_gravacao VARCHAR (3) NOT NULL,
+	tipo_gravacao VARCHAR(3) NOT NULL,
+	diretorio VARCHAR(50),
 	id_tipo_composicao SMALLINT NOT NULL
 )on spot_fg02;
 
