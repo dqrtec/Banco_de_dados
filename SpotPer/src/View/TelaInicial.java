@@ -41,6 +41,10 @@ public class TelaInicial extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         labelTitulo = new javax.swing.JLabel();
+        menuMusica1 = new javax.swing.JLabel();
+        menuArtista1 = new javax.swing.JLabel();
+        menuAlbum1 = new javax.swing.JLabel();
+        menuPlaylist1 = new javax.swing.JLabel();
         menuMusica = new javax.swing.JLabel();
         menuArtista = new javax.swing.JLabel();
         menuAlbum = new javax.swing.JLabel();
@@ -59,6 +63,66 @@ public class TelaInicial extends javax.swing.JFrame {
         labelTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelTitulo.setText("Spotper");
 
+        menuMusica1.setFont(new java.awt.Font("MV Boli", 0, 18)); // NOI18N
+        menuMusica1.setForeground(new java.awt.Color(155, 155, 155));
+        menuMusica1.setText("Músicas");
+        menuMusica1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menuMusica1MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                menuMusica1MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                menuMusica1MouseExited(evt);
+            }
+        });
+
+        menuArtista1.setFont(new java.awt.Font("MV Boli", 0, 18)); // NOI18N
+        menuArtista1.setForeground(new java.awt.Color(155, 155, 155));
+        menuArtista1.setText("Artistas");
+        menuArtista1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menuArtista1MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                menuArtista1MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                menuArtista1MouseExited(evt);
+            }
+        });
+
+        menuAlbum1.setFont(new java.awt.Font("MV Boli", 0, 18)); // NOI18N
+        menuAlbum1.setForeground(new java.awt.Color(155, 155, 155));
+        menuAlbum1.setText("Álbuns");
+        menuAlbum1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menuAlbum1MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                menuAlbum1MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                menuAlbum1MouseExited(evt);
+            }
+        });
+
+        menuPlaylist1.setFont(new java.awt.Font("MV Boli", 0, 18)); // NOI18N
+        menuPlaylist1.setForeground(new java.awt.Color(155, 155, 155));
+        menuPlaylist1.setText("Playlists");
+        menuPlaylist1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menuPlaylist1MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                menuPlaylist1MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                menuPlaylist1MouseExited(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -67,12 +131,30 @@ public class TelaInicial extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(labelTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, 829, Short.MAX_VALUE)
                 .addContainerGap())
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(178, 178, 178)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(menuArtista1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(menuMusica1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(menuAlbum1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(menuPlaylist1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(183, 183, 183))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(40, 40, 40)
+                .addGap(76, 76, 76)
                 .addComponent(labelTitulo)
+                .addGap(87, 87, 87)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(menuAlbum1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(menuMusica1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(106, 106, 106)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(menuPlaylist1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(menuArtista1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -257,7 +339,7 @@ public class TelaInicial extends javax.swing.JFrame {
     }//GEN-LAST:event_menuMusicaMouseEntered
 
     private void menuMusicaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuMusicaMouseExited
-        Color gray = new Color(155,155,155);
+        Color gray = new Color(155, 155, 155);
         menuMusica.setForeground(gray);
     }//GEN-LAST:event_menuMusicaMouseExited
 
@@ -266,7 +348,7 @@ public class TelaInicial extends javax.swing.JFrame {
     }//GEN-LAST:event_menuArtistaMouseEntered
 
     private void menuArtistaMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuArtistaMouseExited
-        Color gray = new Color(155,155,155);
+        Color gray = new Color(155, 155, 155);
         menuArtista.setForeground(gray);
     }//GEN-LAST:event_menuArtistaMouseExited
 
@@ -275,7 +357,7 @@ public class TelaInicial extends javax.swing.JFrame {
     }//GEN-LAST:event_menuAlbumMouseEntered
 
     private void menuAlbumMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuAlbumMouseExited
-        Color gray = new Color(155,155,155);
+        Color gray = new Color(155, 155, 155);
         menuAlbum.setForeground(gray);
     }//GEN-LAST:event_menuAlbumMouseExited
 
@@ -284,7 +366,7 @@ public class TelaInicial extends javax.swing.JFrame {
     }//GEN-LAST:event_menuPlaylistMouseEntered
 
     private void menuPlaylistMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuPlaylistMouseExited
-        Color gray = new Color(155,155,155);
+        Color gray = new Color(155, 155, 155);
         menuPlaylist.setForeground(gray);
     }//GEN-LAST:event_menuPlaylistMouseExited
 
@@ -293,9 +375,64 @@ public class TelaInicial extends javax.swing.JFrame {
     }//GEN-LAST:event_labelNovaPlaylistMouseEntered
 
     private void labelNovaPlaylistMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelNovaPlaylistMouseExited
-        Color gray = new Color(155,155,155);
+        Color gray = new Color(155, 155, 155);
         labelNovaPlaylist.setForeground(gray);
     }//GEN-LAST:event_labelNovaPlaylistMouseExited
+
+    private void menuMusica1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuMusica1MouseClicked
+        new MostrarFaixas().setVisible(true);
+        dispose();
+    }//GEN-LAST:event_menuMusica1MouseClicked
+
+    private void menuMusica1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuMusica1MouseEntered
+        menuMusica1.setForeground(Color.WHITE);
+    }//GEN-LAST:event_menuMusica1MouseEntered
+
+    private void menuMusica1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuMusica1MouseExited
+        Color gray = new Color(155, 155, 155);
+        menuMusica1.setForeground(gray);
+    }//GEN-LAST:event_menuMusica1MouseExited
+
+    private void menuArtista1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuArtista1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_menuArtista1MouseClicked
+
+    private void menuArtista1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuArtista1MouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_menuArtista1MouseEntered
+
+    private void menuArtista1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuArtista1MouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_menuArtista1MouseExited
+
+    private void menuAlbum1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuAlbum1MouseClicked
+
+        new MostrarAlbum().setVisible(true);
+        dispose();
+    }//GEN-LAST:event_menuAlbum1MouseClicked
+
+    private void menuAlbum1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuAlbum1MouseEntered
+        menuAlbum1.setForeground(Color.WHITE);
+    }//GEN-LAST:event_menuAlbum1MouseEntered
+
+    private void menuAlbum1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuAlbum1MouseExited
+        Color gray = new Color(155, 155, 155);
+        menuAlbum1.setForeground(gray);
+    }//GEN-LAST:event_menuAlbum1MouseExited
+
+    private void menuPlaylist1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuPlaylist1MouseClicked
+        new MostrarPlaylist().setVisible(true);
+        dispose();
+    }//GEN-LAST:event_menuPlaylist1MouseClicked
+
+    private void menuPlaylist1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuPlaylist1MouseEntered
+        menuPlaylist1.setForeground(Color.WHITE);
+    }//GEN-LAST:event_menuPlaylist1MouseEntered
+
+    private void menuPlaylist1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuPlaylist1MouseExited
+        Color gray = new Color(155, 155, 155);
+        menuPlaylist1.setForeground(gray);
+    }//GEN-LAST:event_menuPlaylist1MouseExited
 
     /**
      * @param args the command line arguments
@@ -340,8 +477,12 @@ public class TelaInicial extends javax.swing.JFrame {
     private javax.swing.JLabel labelNovaPlaylist;
     private javax.swing.JLabel labelTitulo;
     private javax.swing.JLabel menuAlbum;
+    private javax.swing.JLabel menuAlbum1;
     private javax.swing.JLabel menuArtista;
+    private javax.swing.JLabel menuArtista1;
     private javax.swing.JLabel menuMusica;
+    private javax.swing.JLabel menuMusica1;
     private javax.swing.JLabel menuPlaylist;
+    private javax.swing.JLabel menuPlaylist1;
     // End of variables declaration//GEN-END:variables
 }
